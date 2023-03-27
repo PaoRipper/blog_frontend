@@ -1,0 +1,65 @@
+#top-section #card-section {
+  padding: 3% 7%;
+}
+
+#middle-section #card-section {
+  padding: 3% 4%;
+}
+
+.card {
+  margin: 7% 1%;
+  border-radius: 10px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 1px 15px 24px -8px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 1px 15px 24px -8px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 1px 15px 24px -8px rgba(0, 0, 0, 0.75);
+  transition: 0.3s;
+}
+
+.card:hover {
+    transform: translate(0, -10px);
+    cursor: pointer;
+}
+
+
+.card-header {
+  background-color: #ff368d;
+  color: #fff;
+  border: none;
+}
+
+.card-title {
+  font-size: 1.8rem;
+  font-weight: 900;
+  padding-top: 15px;
+}
+
+.card-body {
+  background-color: rgba(244, 244, 244, 0.3);
+  color: #000;
+  border: none;
+}
+
+.card-text {
+  font-size: 1rem;
+}
+
+.card-footer {
+  color: #000;
+  border: none;
+}
+
+.comment-profile-image {
+  margin-right: 10px;
+}
+
+.comment-see-more {
+  float: right;
+  text-decoration: none;
+}
+
+.comment-text {
+  font-size: 0.8rem;
+}
+

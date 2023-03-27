@@ -1,0 +1,16 @@
+.navbar {
+    padding: 50px;
+}
+
+.navbar-brand {
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+.nav-item {
+    margin-right: 1rem;
+}
+
+.nav-link:hover {
+    color: #ff368d;
+}
