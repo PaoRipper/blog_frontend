@@ -25,11 +25,15 @@
     "lodash": "^4.17.21",
     "next": "13.2.4",
     "react": "18.2.0",
+    "react-alert": "^7.0.3",
+    "react-alert-template-basic": "^1.0.2",
+    "react-cookie": "^4.1.1",
     "react-dom": "18.2.0",
     "react-google-login": "^5.2.2",
     "typescript": "5.0.2"
   },
   "devDependencies": {
+    "@types/react-alert": "^7.0.2",
     "dotenv": "^16.0.3"
   }
 }

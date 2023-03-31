@@ -9,7 +9,7 @@ type TUser = {
 };
 
 type TContext = {
-  login: (email: string, password: string) => any;
+  login: (email: string, password: string, type: string) => any;
   logout: () => any;
   isLogin: boolean;
   user: TUser;
@@ -30,18 +30,20 @@ export const LoginContextProvider = (props: { children: any }) => {
     username: "",
   });
 
-  const login = (email: string, password: string) => {
-    getLogin(email, password).then((res) => {
+  const login = (email: string, password: string, type: string) => {
+    getLogin(email, password, type).then((res) => {
       setUser(res);
       res.auth && setIsLogin(res.auth);
-      typeof window !== "undefined" && window.localStorage.setItem("LOGIN_TOKEN", res.token);
+      typeof window !== "undefined" &&
+        window.localStorage.setItem("LOGIN_TOKEN", res.token);
     });
   };
 
   const logout = () => {
     setUser({ auth: false, token: "", username: "" });
     !user.auth && setIsLogin(false);
-    typeof window !== "undefined" && window.localStorage.setItem("LOGIN_TOKEN", "");
+    typeof window !== "undefined" &&
+      window.localStorage.setItem("LOGIN_TOKEN", "");
   };
 
   useEffect(() => {
@@ -49,6 +51,7 @@ export const LoginContextProvider = (props: { children: any }) => {
       const token = window.localStorage.getItem("LOGIN_TOKEN");
       if (token) {
         const decoded: TUser = jwt_decode(token);
+        console.log(decoded);
         const { auth, username } = decoded;
         setUser({
           auth,
@@ -57,7 +60,6 @@ export const LoginContextProvider = (props: { children: any }) => {
         });
       }
     }
-    
   }, []);
 
   return (

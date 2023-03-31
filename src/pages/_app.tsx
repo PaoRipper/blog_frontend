@@ -10,15 +10,29 @@ import "../../public/assets/css/Navbar.css";
 import "../../public/assets/css/Signup.css";
 
 import { LoginContextProvider } from "@/context/LoginContext";
+import { render } from "react-dom";
+import { transitions, positions, Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const options = {
+    // you can also just use 'bottom center'
+    position: positions.BOTTOM_CENTER,
+    timeout: 5000,
+    offset: "30px",
+    // you can also just use 'scale'
+    transition: transitions.SCALE,
+  };
+
   useEffect(() => {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
   return (
-    <LoginContextProvider>
-      <Navbar />
-      <Component {...pageProps} />;
-    </LoginContextProvider>
+    <AlertProvider template={AlertTemplate as any}{...options}>
+      <LoginContextProvider>
+        <Navbar />
+        <Component {...pageProps} />;
+      </LoginContextProvider>
+    </AlertProvider>
   );
 }
