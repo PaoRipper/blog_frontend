@@ -18,7 +18,11 @@ export const addPost = async (
   return data;
 };
 
-export const getLogin = async (email: string, password: string, type: string) => {
+export const getLogin = async (
+  email: string,
+  password: string,
+  type: string
+) => {
   const data = await axios
     .post(`${baseURL}/login`, { email, password, type })
     .then((res) => res.data);
@@ -29,7 +33,7 @@ export const register = async (
   username: string,
   email: string,
   password: string,
-  type: string,
+  type: string
 ) => {
   const data = await axios
     .post(`${baseURL}/register`, { username, email, password, type })
