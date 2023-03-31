@@ -18,9 +18,9 @@ export type TPosts = {
 };
 
 export default function Home() {
+  const { login, logout, setUser, user, setIsLogin } = useContext(LoginContext);
   const [posts, setPosts] = useState<TPosts[]>([]);
   const [cookies, setCookies, removeCookie] = useCookies();
-  const { user } = useContext(LoginContext);
   const isLogin = useMemo(() => user.auth, [user]);
 
   const topPosts = [
@@ -62,6 +62,20 @@ export default function Home() {
         )
       );
     });
+  }, []);
+
+  useEffect(() => {
+    const sessionId = cookies["connect.sid"];
+    if (sessionId) {
+      googleLogin().then((res) => {
+        const auth = res.data.auth;
+        const username = res.data.user.username;
+        const connect_sid = res.data.connect_sid;
+        setUser({ auth, token: connect_sid, username });
+        setIsLogin(true);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

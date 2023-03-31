@@ -1,6 +1,7 @@
-import { createContext, useEffect, useState } from "react";
-import { getLogin } from "@/api/blogApi";
+import { Dispatch, SetStateAction, createContext, useEffect, useState } from "react";
+import { getLogin, googleLogin } from "@/api/blogApi";
 import jwt_decode from "jwt-decode";
+import { useCookies } from "react-cookie";
 
 type TUser = {
   auth: boolean;
@@ -13,14 +14,18 @@ type TContext = {
   logout: () => any;
   isLogin: boolean;
   user: TUser;
+  setUser: Dispatch<SetStateAction<TUser>>
+  setIsLogin: Dispatch<SetStateAction<boolean>>
 };
 
 export const LoginContext = createContext<TContext>({
   login: (): any => null,
   logout: (): any => null,
   isLogin: false,
+  setUser: () => {},
   user: { auth: false, token: "", username: "" },
-});
+  setIsLogin: () => {},
+})
 
 export const LoginContextProvider = (props: { children: any }) => {
   const [isLogin, setIsLogin] = useState(false);
@@ -29,6 +34,7 @@ export const LoginContextProvider = (props: { children: any }) => {
     token: "",
     username: "",
   });
+  const [cookies, setCookies, removeCookie] = useCookies();
 
   const login = (email: string, password: string, type: string) => {
     getLogin(email, password, type).then((res) => {
@@ -41,6 +47,8 @@ export const LoginContextProvider = (props: { children: any }) => {
 
   const logout = () => {
     setUser({ auth: false, token: "", username: "" });
+    setIsLogin(false);
+    removeCookie("connect.sid")
     !user.auth && setIsLogin(false);
     typeof window !== "undefined" &&
       window.localStorage.setItem("LOGIN_TOKEN", "");
@@ -51,19 +59,20 @@ export const LoginContextProvider = (props: { children: any }) => {
       const token = window.localStorage.getItem("LOGIN_TOKEN");
       if (token) {
         const decoded: TUser = jwt_decode(token);
-        console.log(decoded);
         const { auth, username } = decoded;
         setUser({
           auth,
           token: window!.localStorage!.getItem("LOGIN_TOKEN")!,
           username,
         });
+        setIsLogin(true);
       }
     }
+  
   }, []);
 
   return (
-    <LoginContext.Provider value={{ login, logout, isLogin, user }}>
+    <LoginContext.Provider value={{ login, logout, isLogin, setUser, user, setIsLogin }}>
       {props.children}
     </LoginContext.Provider>
   );

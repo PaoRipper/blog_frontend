@@ -7,13 +7,12 @@ import { useRouter } from "next/router";
 import FacebookIcon from "../../public/assets/icons/facebook.png";
 import GoogleIcon from "../../public/assets/icons/google.png";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { baseURL, getLogin } from "@/api/blogApi";
+import { baseURL, getLogin, googleLogin } from "@/api/blogApi";
 import { useAlert } from "react-alert";
 
 const Login = () => {
-  const { login, logout, user } = useContext(LoginContext);
+  const { login, logout, setUser, user, setIsLogin } = useContext(LoginContext);
   const alert = useAlert();
-
   const isLogin = useMemo(() => user.auth, [user]);
   const router = useRouter();
   const [formValues, setFormValues] = useState({
@@ -32,6 +31,12 @@ const Login = () => {
 
   const handleSubmit = () => {
     login(formValues.email, formValues.password, "default");
+  };
+
+  const handleGoogleLogin = () => {
+    if (window) {
+      window.open(`${baseURL}/auth/google`, "_self");
+    }
   };
 
   useEffect(() => {
@@ -67,7 +72,7 @@ const Login = () => {
       </button>
       <div className="social-sign">
         <h6 className="social-sign-text">Or login using</h6>
-        <Link href={`${baseURL}/auth/google`}>
+        <Link href="#" onClick={handleGoogleLogin}>
           <Image src={GoogleIcon} alt="google-icon" className="social-icon" />
         </Link>
       </div>
