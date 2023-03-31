@@ -1,0 +1,75 @@
+.signup {
+  margin: 0 auto;
+  width: 30%;
+  background-color: #fff;
+  text-align: center;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 1px 15px 24px -8px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 1px 15px 24px -8px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 1px 15px 24px -8px rgba(0, 0, 0, 0.75);
+}
+
+.sign-up-text {
+  font-weight: 600;
+}
+
+.input-label {
+  float: left;
+  margin: 10px auto;
+  text-transform: capitalize;
+}
+
+.custom-input-group {
+  margin: 5px auto;
+}
+
+.custom-input {
+  border: none;
+  border-bottom: 2px solid #d3d3d3;
+  height: 3rem;
+}
+
+.forgot-password {
+  float: right;
+  font-size: 16px;
+  margin: 0 auto 30px;
+}
+
+.signup-btn {
+  border: none;
+  border-radius: 30px;
+  width: 100%;
+  background: #ff368d;
+  color: #fff;
+}
+
+.signup-btn:hover {
+  background: #ff368d;
+  color: #fff;
+}
+
+.social-sign {
+    margin: 3rem auto;
+    font-size: 0.2rem;
+}
+
+.social-sign-text {
+    font-size: 1rem
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    margin: 15px 5px;
+}
+
+.social-icon:hover {
+  cursor: pointer;
+}
+
+@media (max-width: 991px) {
+  .signup {
+    width: 80%;
+  }
+}

@@ -1,9 +1,13 @@
+import { LoginContext } from "@/context/LoginContext";
 import Link from "next/link";
-import React from "react";
+import React, { useContext, useMemo } from "react";
 
 // import BrandLogo from "../public/assets/logo/brand-logo.svg";
 
 const Header = () => {
+  const { user, logout } = useContext(LoginContext);
+  const isLogin = useMemo(() => user.auth, [user]);
+
   const Menus = [
     {
       title: "About",
@@ -14,14 +18,26 @@ const Header = () => {
       url: "/contact",
     },
     {
+      title: "Profile",
+      url: "/profile",
+    },
+    {
       title: "Sign up",
-      url: "/signup"
+      url: "/signup",
     },
     {
       title: "Login",
-      url: "/login"
-    }
+      url: "/login",
+    },
   ];
+
+  const filteredMenus = Menus.filter((menu) => {
+    if (isLogin) {
+      return menu.title != "Login" && menu.title != "Sign up";
+    } else {
+      return menu;
+    }
+  });
 
   return (
     <nav className="navbar navbar-expand-lg">
@@ -41,13 +57,22 @@ const Header = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarContent">
           <ul className="navbar-nav ms-auto">
-            {Menus.map((item, index) => (
+            {filteredMenus.map((item, index) => (
               <li className="nav-item" key={index}>
                 <a href={item.url} className="nav-link">
                   {item.title}
                 </a>
               </li>
             ))}
+            {isLogin ? (
+              <li className="nav-item">
+                <a href="#" className="nav-link" onClick={logout}>
+                  Logout
+                </a>
+              </li>
+            ) : (
+              ""
+            )}
           </ul>
         </div>
       </div>

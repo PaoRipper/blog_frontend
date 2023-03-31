@@ -20,10 +20,16 @@
     "bootstrap": "^5.3.0-alpha2",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
+    "gapi-script": "^1.2.0",
+    "jwt-decode": "^3.1.2",
     "lodash": "^4.17.21",
     "next": "13.2.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-google-login": "^5.2.2",
     "typescript": "5.0.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.3"
   }
 }
