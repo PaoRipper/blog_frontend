@@ -1,4 +1,4 @@
-import React from "react";
+import React, { RefObject } from "react";
 
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,7 +10,9 @@ const CustomInput = (props: {
   placeholder: string;
   arabLabel?: string;
   className?: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
+
   return (
     <div className="custom-input-group">
       <label className="input-label">{props.name}</label>
@@ -26,6 +28,7 @@ const CustomInput = (props: {
           className={`form-control ${props.className ? props.className : ""}`}
           placeholder={props.placeholder}
           aria-label={props.arabLabel}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => props.onChange(e)}
         />
       </div>
     </div>

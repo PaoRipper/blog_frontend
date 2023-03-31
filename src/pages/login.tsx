@@ -1,33 +1,76 @@
+import CustomInput from "@/components/Layout/CustomInput";
 import { LoginContext } from "@/context/LoginContext";
+import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import FacebookIcon from "../../public/assets/icons/facebook.png";
+import GoogleIcon from "../../public/assets/icons/google.png";
 import React, { useContext, useEffect, useMemo, useState } from "react";
+import { baseURL, getLogin } from "@/api/blogApi";
+import { useAlert } from "react-alert";
 
 const Login = () => {
   const { login, logout, user } = useContext(LoginContext);
+  const alert = useAlert();
+
   const isLogin = useMemo(() => user.auth, [user]);
   const router = useRouter();
+  const [formValues, setFormValues] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues((prev) => {
+      return {
+        ...prev,
+        [e?.target.name]: e?.target.value,
+      };
+    });
+  };
+
+  const handleSubmit = () => {
+    login(formValues.email, formValues.password, "default");
+  };
 
   useEffect(() => {
-    isLogin && router.push("/");
+    isLogin && alert.show("Logged in!");
+    setTimeout(() => {
+      isLogin && router.push("/");
+    }, 3000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
 
   return (
-    <div>
-      <button
-        className="btn btn-primary"
-        onClick={() => login("Paoripper01@gmail.com", "Ripper217569")}
-      >
+    <div className="signup">
+      <h2 className="sign-up-text">Login</h2>
+      <CustomInput
+        icon={faUser}
+        placeholder="Type your email"
+        name="email"
+        type="text"
+        className="custom-input"
+        onChange={handleChange}
+      />
+      <CustomInput
+        icon={faLock}
+        placeholder="Type your password"
+        name="password"
+        type="password"
+        className="custom-input"
+        onChange={handleChange}
+      />
+      <span className="forgot-password">Forgot password?</span>
+      <button className="btn btn-lg signup-btn" onClick={handleSubmit}>
         Login
       </button>
-      <button className="btn btn-danger" onClick={logout}>
-        Logout
-      </button>
-      {isLogin ? (
-        <h1 className="text-primary fw-bold">You are logged in!</h1>
-      ) : (
-        <h1 className="text-danger fw-bold">You are not logged in!</h1>
-      )}
+      <div className="social-sign">
+        <h6 className="social-sign-text">Or login using</h6>
+        <Link href={`${baseURL}/auth/google`}>
+          <Image src={GoogleIcon} alt="google-icon" className="social-icon" />
+        </Link>
+      </div>
     </div>
   );
 };

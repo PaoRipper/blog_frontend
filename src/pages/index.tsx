@@ -4,6 +4,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { addPost, getAllPosts, googleLogin } from "@/api/blogApi";
 import { values } from "lodash";
 import { LoginContext } from "@/context/LoginContext";
+import { useCookies } from "react-cookie";
 
 export type TPosts = {
   commentID: number;
@@ -18,6 +19,7 @@ export type TPosts = {
 
 export default function Home() {
   const [posts, setPosts] = useState<TPosts[]>([]);
+  const [cookies, setCookies, removeCookie] = useCookies();
   const { user } = useContext(LoginContext);
   const isLogin = useMemo(() => user.auth, [user]);
 
