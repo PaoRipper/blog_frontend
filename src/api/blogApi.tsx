@@ -46,3 +46,8 @@ export const googleLogin = async () => {
     .then((res) => res.data);
   return data;
 };
+
+export const getPostById = async (id: number) => {
+  const data = await axios.get(`${baseURL}/post/${id}`).then(res => res.data);
+  return data;
+};

@@ -8,6 +8,8 @@ import "../../public/assets/css/Card.css";
 import "../../public/assets/css/Layout.css";
 import "../../public/assets/css/Navbar.css";
 import "../../public/assets/css/Signup.css";
+import "../../public/assets/css/Profile.css";
+import "../../public/assets/css/Comment.css";
 
 import { LoginContextProvider } from "@/context/LoginContext";
 import { render } from "react-dom";

@@ -7,7 +7,6 @@
 }
 
 .card {
-  margin: 7% 1%;
   border-radius: 10px;
   overflow: hidden;
   border: none;
@@ -15,13 +14,17 @@
   -webkit-box-shadow: 1px 15px 24px -8px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 1px 15px 24px -8px rgba(0, 0, 0, 0.75);
   transition: 0.3s;
+  text-decoration: none;
 }
 
-.card:hover {
-    transform: translate(0, -10px);
-    cursor: pointer;
+.hoverable {
+  margin: 7% auto;
 }
 
+.hoverable:hover {
+  transform: translate(0, -10px);
+  cursor: pointer;
+}
 
 .card-header {
   background-color: #ff368d;
@@ -62,4 +65,3 @@
 .comment-text {
   font-size: 0.8rem;
 }
-

@@ -42,9 +42,13 @@ const Login = () => {
 
   useEffect(() => {
     isLogin && alert.show("Logged in!");
-    setTimeout(() => {
+    const id = setTimeout(() => {
       isLogin && router.push("/");
-    }, 3000);
+    }, 2000);
+
+    return () => {
+      clearTimeout(id);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
 

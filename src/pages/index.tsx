@@ -1,7 +1,6 @@
-import Navbar from "@/components/Navbar";
 import PostCard from "@/components/PostCard";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { addPost, getAllPosts, googleLogin } from "@/api/blogApi";
+import { getAllPosts, googleLogin } from "@/api/blogApi";
 import { values } from "lodash";
 import { LoginContext } from "@/context/LoginContext";
 import { useCookies } from "react-cookie";
@@ -15,26 +14,30 @@ export type TPosts = {
   postTitle: string;
   userID: string;
   comments: string[];
+  comment: string;
+  commentUser: string;
 };
 
 export default function Home() {
-  const { login, logout, setUser, user, setIsLogin } = useContext(LoginContext);
+  const { setUser, setIsLogin } = useContext(LoginContext);
   const [posts, setPosts] = useState<TPosts[]>([]);
   const [cookies, setCookies, removeCookie] = useCookies();
-  const isLogin = useMemo(() => user.auth, [user]);
 
   const topPosts = [
     {
+      id: 1,
       title: "ของโคตรดีย์",
       description: "ดับเบิ้ลห",
       comments: ["เบิ้มๆ คือลือน่ะ"],
     },
     {
+      id: 2,
       title: "Milf is the best",
       description: "milf really is the best guys",
       comments: ["โคตรแจ่ม"],
     },
     {
+      id: 3,
       title: "วาร์ปประจำวันสหาย",
       description: "235126",
       comments: ["359456", "537891"],
@@ -68,11 +71,10 @@ export default function Home() {
     const sessionId = cookies["connect.sid"];
     if (sessionId) {
       googleLogin().then((res) => {
-        const auth = res.data.auth;
-        const username = res.data.user.username;
-        const connect_sid = res.data.connect_sid;
+        const { auth, username, connect_sid } = res.data;
         setUser({ auth, token: connect_sid, username });
-        setIsLogin(true);
+        // setIsLogin(true)
+        window && window.localStorage.setItem("isLogin", "true");
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -82,16 +84,12 @@ export default function Home() {
     <>
       <section id="top-section">
         <section id="card-section">
-          {/* {isLogin ? (
-            <h1 className="text-success text-center">{user.username}</h1>
-          ) : (
-            <h1 className="text-danger text-center">You are not logged in</h1>
-          )} */}
           <h1>Top Bon</h1>
           <div className="row">
             {topPosts.map((post, index) => (
               <div key={index} className="col-lg-4">
                 <PostCard
+                  id={post.id}
                   title={post.title}
                   description={post.description}
                   comments={post.comments}
@@ -109,6 +107,7 @@ export default function Home() {
             {posts.map((post, index) => (
               <div key={index} className="col-lg-3">
                 <PostCard
+                  id={post.postID}
                   title={post.postTitle}
                   description={post.postText}
                   comments={post.comments}

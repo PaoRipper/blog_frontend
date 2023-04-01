@@ -24,7 +24,7 @@ const Header = () => {
     },
     {
       title: "Logout",
-      url: "#",
+      url: "",
       onClick: logout,
     },
   ];
@@ -41,7 +41,7 @@ const Header = () => {
     <nav className="navbar navbar-expand-lg">
       <div className="container">
         <div>
-          <Link href="#" className="navbar-brand">
+          <Link href="/" className="navbar-brand">
             Bon
           </Link>
         </div>
