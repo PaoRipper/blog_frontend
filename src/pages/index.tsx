@@ -82,11 +82,11 @@ export default function Home() {
     <>
       <section id="top-section">
         <section id="card-section">
-          {isLogin ? (
+          {/* {isLogin ? (
             <h1 className="text-success text-center">{user.username}</h1>
           ) : (
             <h1 className="text-danger text-center">You are not logged in</h1>
-          )}
+          )} */}
           <h1>Top Bon</h1>
           <div className="row">
             {topPosts.map((post, index) => (

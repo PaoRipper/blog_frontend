@@ -1,6 +1,5 @@
+import { baseURL } from "@/constants/constants";
 import axios from "axios";
-
-export const baseURL = "http://localhost:8000";
 
 export const getAllPosts = async () => {
   const data = await axios.get(`${baseURL}/posts`).then((res) => res.data);

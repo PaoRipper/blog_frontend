@@ -1,26 +1,19 @@
 import { LoginContext } from "@/context/LoginContext";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useContext, useMemo } from "react";
 
-// import BrandLogo from "../public/assets/logo/brand-logo.svg";
+import BrandLogo from "../../public/assets/images/Rubio_Circle.png";
 
 const Header = () => {
   const { user, logout } = useContext(LoginContext);
   const isLogin = useMemo(() => user.auth, [user]);
 
   const Menus = [
-    {
-      title: "About",
-      url: "/about",
-    },
-    {
-      title: "Contact",
-      url: "/contact",
-    },
-    {
-      title: "Profile",
-      url: "/profile",
-    },
+    // {
+    //   title: "Profile",
+    //   url: "/profile",
+    // },
     {
       title: "Sign up",
       url: "/signup",
@@ -29,13 +22,18 @@ const Header = () => {
       title: "Login",
       url: "/login",
     },
+    {
+      title: "Logout",
+      url: "#",
+      onClick: logout,
+    },
   ];
 
   const filteredMenus = Menus.filter((menu) => {
     if (isLogin) {
       return menu.title != "Login" && menu.title != "Sign up";
     } else {
-      return menu;
+      return menu.title != "Profile" && menu.title != "Logout";
     }
   });
 
@@ -46,7 +44,6 @@ const Header = () => {
           <Link href="#" className="navbar-brand">
             Bon
           </Link>
-          {/* <Image src={BrandLogo} alt="navbar-brand" width={30} /> */}
         </div>
         <button
           className="navbar-toggler"
@@ -57,22 +54,27 @@ const Header = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarContent">
           <ul className="navbar-nav ms-auto">
+            {isLogin ? (
+              <li className="profile-image">
+                <Image
+                  src={BrandLogo}
+                  alt="navbar-brand"
+                  width={40}
+                  height={40}
+                />
+              </li>
+            ) : null}
             {filteredMenus.map((item, index) => (
               <li className="nav-item" key={index}>
-                <a href={item.url} className="nav-link">
-                  {item.title}
-                </a>
+                <Link href={item.url} className="nav-link">
+                  {item.onClick ? (
+                    <span onClick={item.onClick}>{item.title}</span>
+                  ) : (
+                    item.title
+                  )}
+                </Link>
               </li>
             ))}
-            {isLogin ? (
-              <li className="nav-item">
-                <a href="#" className="nav-link" onClick={logout}>
-                  Logout
-                </a>
-              </li>
-            ) : (
-              ""
-            )}
           </ul>
         </div>
       </div>

@@ -7,8 +7,9 @@ import { useRouter } from "next/router";
 import FacebookIcon from "../../public/assets/icons/facebook.png";
 import GoogleIcon from "../../public/assets/icons/google.png";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { baseURL, getLogin, googleLogin } from "@/api/blogApi";
+import { getLogin, googleLogin } from "@/api/blogApi";
 import { useAlert } from "react-alert";
+import { baseURL } from "@/constants/constants";
 
 const Login = () => {
   const { login, logout, setUser, user, setIsLogin } = useContext(LoginContext);
