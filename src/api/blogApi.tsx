@@ -7,12 +7,11 @@ export const getAllPosts = async () => {
 };
 
 export const addPost = async (
-  title: String,
-  content: String,
+  body: String,
   userID: Number
 ) => {
   const data = await axios
-    .post(`${baseURL}/post`, { title, content, userID })
+    .post(`${baseURL}/post`, { body, userID })
     .then((res) => res.data);
   return data;
 };

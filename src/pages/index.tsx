@@ -10,8 +10,9 @@ export type TPosts = {
   commentText: string;
   created_at: string | null;
   postID: number;
-  postText: string;
-  postTitle: string;
+  username: string,
+  postText: string,
+  body: string;
   userID: string;
   comments: string[];
   comment: string;
@@ -26,20 +27,20 @@ export default function Home() {
   const topPosts = [
     {
       id: 1,
-      title: "ของโคตรดีย์",
-      description: "ดับเบิ้ลห",
+      body: "ดับเบิ้ลห",
+      username: "Paori",
       comments: ["เบิ้มๆ คือลือน่ะ"],
     },
     {
       id: 2,
-      title: "Milf is the best",
-      description: "milf really is the best guys",
+      body: "milf really is the best guys",
+      username: "NT",
       comments: ["โคตรแจ่ม"],
     },
     {
       id: 3,
-      title: "วาร์ปประจำวันสหาย",
-      description: "235126",
+      body: "235126",
+      username: "RRRR",
       comments: ["359456", "537891"],
     },
   ];
@@ -49,14 +50,14 @@ export default function Home() {
       setPosts(
         values(
           res.reduce((acc: any, obj: any) => {
-            const { postID, postTitle, postText, commentText } = obj;
+            const { postID, postText, commentText, username } = obj;
             if (acc[postID]) {
               acc[postID].comments.push(commentText);
             } else {
               acc[postID] = {
                 postID,
-                postTitle,
-                postText,
+                username,
+                body: postText,
                 comments: [commentText],
               };
             }
@@ -67,12 +68,14 @@ export default function Home() {
     });
   }, []);
 
+
   useEffect(() => {
     const sessionId = cookies["connect.sid"];
     if (sessionId) {
       googleLogin().then((res) => {
-        const { auth, username, connect_sid } = res.data;
-        setUser({ auth, token: connect_sid, username });
+        const {userID, username} = res.data.user
+        const { auth, connect_sid } = res.data;
+        setUser({ auth, token: connect_sid, userID, username });
         // setIsLogin(true)
         window && window.localStorage.setItem("isLogin", "true");
       });
@@ -90,8 +93,9 @@ export default function Home() {
               <div key={index} className="col-lg-4">
                 <PostCard
                   id={post.id}
-                  title={post.title}
-                  description={post.description}
+                  username={post.username}
+                  // title={post.title}
+                  body={post.body}
                   comments={post.comments}
                 />
               </div>
@@ -108,8 +112,8 @@ export default function Home() {
               <div key={index} className="col-lg-3">
                 <PostCard
                   id={post.postID}
-                  title={post.postTitle}
-                  description={post.postText}
+                  username={post.username}
+                  body={post.body}
                   comments={post.comments}
                 />
               </div>

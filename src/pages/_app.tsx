@@ -4,12 +4,12 @@ import Navbar from "../components/Navbar";
 
 import "bootstrap/dist/css/bootstrap.css";
 
-import "../../public/assets/css/Card.css";
-import "../../public/assets/css/Layout.css";
-import "../../public/assets/css/Navbar.css";
-import "../../public/assets/css/Signup.css";
-import "../../public/assets/css/Profile.css";
-import "../../public/assets/css/Comment.css";
+import "../../public/assets/css/card.css";
+import "../../public/assets/css/layout.css";
+import "../../public/assets/css/navbar.css";
+import "../../public/assets/css/signup.css";
+import "../../public/assets/css/profile.css";
+import "../../public/assets/css/create.css";
 
 import { LoginContextProvider } from "@/context/LoginContext";
 import { render } from "react-dom";

@@ -15,25 +15,33 @@ const Header = () => {
     //   url: "/profile",
     // },
     {
+      key: "sign",
       title: "Sign up",
       url: "/signup",
     },
     {
+      key: "login",
       title: "Login",
       url: "/login",
     },
     {
+      key: "logout",
       title: "Logout",
       url: "",
       onClick: logout,
+    },
+    {
+      key: "create",
+      title: "Create post",
+      url: "/create",
     },
   ];
 
   const filteredMenus = Menus.filter((menu) => {
     if (isLogin) {
-      return menu.title != "Login" && menu.title != "Sign up";
+      return menu.key != "login" && menu.key != "sign";
     } else {
-      return menu.title != "Profile" && menu.title != "Logout";
+      return menu.key != "profile" && menu.key != "logout" && menu.key != "create";
     }
   });
 

@@ -1,14 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { shortText } from "@/utils/formatUtils";
 import Image from "next/image";
 import Link from "next/link";
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
 
 import Person from "../../public/assets/images/Rubio_Circle.png";
+import ProfileLayout from "./Layout/ProfileLayout";
 
 const PostCard = (props: {
   id: number;
-  title: string;
-  description: string;
+  username: string;
+  body: string;
   comments: string[];
   clickable?: boolean;
 }) => {
@@ -18,7 +20,6 @@ const PostCard = (props: {
 
   useEffect(() => {
     setMoreComment(props.comments.length - 1);
-    // If have comment and comment is not null
     if (
       props.comments &&
       props.comments.length >= 1 &&
@@ -35,40 +36,37 @@ const PostCard = (props: {
           />
           <em className="comment-text">{props.comments[0]}</em>
           <Link href={"#"} className="comment-see-more">
-            {/* If has more comment left then show */}
             {moreComment >= 1 ? `+${moreComment} more` : ""}
           </Link>
         </div>
       );
       comment && setComment(comment);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [moreComment]);
 
   useEffect(() => {
     if (props.clickable === false) {
       setClickable(false);
     } else setClickable(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return clickable ? (
     <Link className="card hoverable" href={`post/${props.id}`}>
       <div className="card-header">
-        <h1 className="card-title">{shortText(props.title)}</h1>
+        <ProfileLayout username={props.username} />
       </div>
       <div className="card-body">
-        <p className="card-text">{props.description}</p>
+        <p className="card-text">{props.body}</p>
       </div>
       <div className="card-footer">{comment}</div>
     </Link>
   ) : (
     <div className={`card`}>
       <div className="card-header">
-        <h1 className="card-title">{shortText(props.title)}</h1>
+        <ProfileLayout username={props.username} />
       </div>
       <div className="card-body">
-        <p className="card-text">{props.description}</p>
+        <p className="card-text">{props.body}</p>
       </div>
       <div className="card-footer">{comment}</div>
     </div>

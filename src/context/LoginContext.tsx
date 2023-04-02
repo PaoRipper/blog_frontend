@@ -13,6 +13,7 @@ type TUser = {
   auth: boolean;
   token: string;
   username: string;
+  userID: number | null
 };
 
 type TContext = {
@@ -29,7 +30,7 @@ export const LoginContext = createContext<TContext>({
   logout: (): any => null,
   isLogin: false,
   setUser: () => {},
-  user: { auth: false, token: "", username: "" },
+  user: { auth: false, token: "", username: "", userID: null },
   setIsLogin: () => {},
 });
 
@@ -39,6 +40,7 @@ export const LoginContextProvider = (props: { children: any }) => {
     auth: false,
     token: "",
     username: "",
+    userID: null,
   });
   const [cookies, setCookies, removeCookie] = useCookies();
 
@@ -52,7 +54,7 @@ export const LoginContextProvider = (props: { children: any }) => {
   };
 
   const logout = () => {
-    setUser({ auth: false, token: "", username: "" });
+    setUser({ auth: false, token: "", username: "", userID: null });
     setIsLogin(false);
     removeCookie("connect.sid");
     !user.auth && setIsLogin(false);
@@ -75,6 +77,7 @@ export const LoginContextProvider = (props: { children: any }) => {
           auth,
           token: window!.localStorage!.getItem("LOGIN_TOKEN")!,
           username,
+          userID: null,
         });
         setIsLogin(true);
       }
@@ -86,8 +89,9 @@ export const LoginContextProvider = (props: { children: any }) => {
     const sessionId = cookies["connect.sid"];
     if (sessionId) {
       googleLogin().then((res) => {
-        const { auth, username, connect_sid } = res.data;
-        setUser({ auth, token: connect_sid, username });
+        const {userID, username} = res.data.user
+        const { auth, connect_sid } = res.data;
+        setUser({ auth, token: connect_sid, userID, username });
         setIsLogin(true)
         window && window.localStorage.setItem("isLogin", "true");
       });

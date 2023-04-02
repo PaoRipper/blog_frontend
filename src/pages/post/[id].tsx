@@ -15,16 +15,15 @@ import { LoginContext } from "@/context/LoginContext";
 type TPost = {
   comments: [{ userId: number; comment: string }];
   postID: number;
+  username: string,
   title: string;
   body: string;
 };
 
 const PostID = (props: { data: TPosts[] }) => {
-  const { isLogin } = useContext(LoginContext);
-  const router = useRouter();
   const transformedPost = useMemo(() => {
-    return props.data.reduce((result: any, current) => {
-      const { postID, postText, postTitle, commentUser, comment } = current;
+    return props.data.reduce((result: any, current: TPosts) => {
+      const { postID, postText, commentUser, comment, username } = current;
       // Check if there's an existing entry for this postID in the result array
       const existingEntry: TPost | undefined = result.find(
         (entry: TPosts) => entry.postID === postID
@@ -37,7 +36,7 @@ const PostID = (props: { data: TPosts[] }) => {
       else {
         result.push({
           postID,
-          title: postTitle,
+          username,
           body: postText,
           comments: [{ userId: commentUser, comment }],
         });
@@ -46,14 +45,6 @@ const PostID = (props: { data: TPosts[] }) => {
     }, []);
   }, [props.data]);
 
-  useEffect(() => {
-    if (!isLogin) {
-      router.push("/");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  console.log(isLogin);
   
 
   return (
@@ -62,16 +53,14 @@ const PostID = (props: { data: TPosts[] }) => {
         <div key={post.postID}>
           <PostCard
             id={post.postID}
-            title={post.title}
-            description={post.body}
+            username={post.username}
+            body={post.body}
             comments={[post.comments[0].comment]}
             clickable={false}
           />
         </div>
       ))}
-      <div className="comment">
-        <h1>Comment</h1>
-      </div>
+      
     </div>
   );
 };
@@ -79,7 +68,6 @@ const PostID = (props: { data: TPosts[] }) => {
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const id = Number(context.query.id);
   const data = await getPostById(id).then((res) => res);
-
   return {
     props: {
       data,
