@@ -20,7 +20,7 @@ export type TPosts = {
 };
 
 export default function Home() {
-  const { setUser, setIsLogin } = useContext(LoginContext);
+  const { user, setUser, setIsLogin } = useContext(LoginContext);
   const [posts, setPosts] = useState<TPosts[]>([]);
   const [cookies, setCookies, removeCookie] = useCookies();
 
@@ -82,6 +82,7 @@ export default function Home() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   return (
     <>
