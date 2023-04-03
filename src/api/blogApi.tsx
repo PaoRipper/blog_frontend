@@ -1,6 +1,5 @@
+import { baseURL } from "@/constants/constants";
 import axios from "axios";
-
-export const baseURL = "http://localhost:8000";
 
 export const getAllPosts = async () => {
   const data = await axios.get(`${baseURL}/posts`).then((res) => res.data);
@@ -8,12 +7,11 @@ export const getAllPosts = async () => {
 };
 
 export const addPost = async (
-  title: String,
-  content: String,
+  body: String,
   userID: Number
 ) => {
   const data = await axios
-    .post(`${baseURL}/post`, { title, content, userID })
+    .post(`${baseURL}/post`, { body, userID })
     .then((res) => res.data);
   return data;
 };
@@ -45,5 +43,10 @@ export const googleLogin = async () => {
   const data = await axios
     .get(`${baseURL}/auth/google/success`, { withCredentials: true })
     .then((res) => res.data);
+  return data;
+};
+
+export const getPostById = async (id: number) => {
+  const data = await axios.get(`${baseURL}/post/${id}`).then(res => res.data);
   return data;
 };

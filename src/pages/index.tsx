@@ -1,7 +1,6 @@
-import Navbar from "@/components/Navbar";
 import PostCard from "@/components/PostCard";
 import { useContext, useEffect, useMemo, useState } from "react";
-import { addPost, getAllPosts, googleLogin } from "@/api/blogApi";
+import { getAllPosts, googleLogin } from "@/api/blogApi";
 import { values } from "lodash";
 import { LoginContext } from "@/context/LoginContext";
 import { useCookies } from "react-cookie";
@@ -11,32 +10,37 @@ export type TPosts = {
   commentText: string;
   created_at: string | null;
   postID: number;
-  postText: string;
-  postTitle: string;
+  username: string,
+  postText: string,
+  body: string;
   userID: string;
   comments: string[];
+  comment: string;
+  commentUser: string;
 };
 
 export default function Home() {
-  const { login, logout, setUser, user, setIsLogin } = useContext(LoginContext);
+  const { user, setUser, setIsLogin } = useContext(LoginContext);
   const [posts, setPosts] = useState<TPosts[]>([]);
   const [cookies, setCookies, removeCookie] = useCookies();
-  const isLogin = useMemo(() => user.auth, [user]);
 
   const topPosts = [
     {
-      title: "ของโคตรดีย์",
-      description: "ดับเบิ้ลห",
+      id: 1,
+      body: "ดับเบิ้ลห",
+      username: "Paori",
       comments: ["เบิ้มๆ คือลือน่ะ"],
     },
     {
-      title: "Milf is the best",
-      description: "milf really is the best guys",
+      id: 2,
+      body: "milf really is the best guys",
+      username: "NT",
       comments: ["โคตรแจ่ม"],
     },
     {
-      title: "วาร์ปประจำวันสหาย",
-      description: "235126",
+      id: 3,
+      body: "235126",
+      username: "RRRR",
       comments: ["359456", "537891"],
     },
   ];
@@ -46,14 +50,14 @@ export default function Home() {
       setPosts(
         values(
           res.reduce((acc: any, obj: any) => {
-            const { postID, postTitle, postText, commentText } = obj;
+            const { postID, postText, commentText, username } = obj;
             if (acc[postID]) {
               acc[postID].comments.push(commentText);
             } else {
               acc[postID] = {
                 postID,
-                postTitle,
-                postText,
+                username,
+                body: postText,
                 comments: [commentText],
               };
             }
@@ -64,36 +68,35 @@ export default function Home() {
     });
   }, []);
 
+
   useEffect(() => {
     const sessionId = cookies["connect.sid"];
     if (sessionId) {
       googleLogin().then((res) => {
-        const auth = res.data.auth;
-        const username = res.data.user.username;
-        const connect_sid = res.data.connect_sid;
-        setUser({ auth, token: connect_sid, username });
-        setIsLogin(true);
+        const {userID, username} = res.data.user
+        const { auth, connect_sid } = res.data;
+        setUser({ auth, token: connect_sid, userID, username });
+        // setIsLogin(true)
+        window && window.localStorage.setItem("isLogin", "true");
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+
   return (
     <>
       <section id="top-section">
         <section id="card-section">
-          {isLogin ? (
-            <h1 className="text-success text-center">{user.username}</h1>
-          ) : (
-            <h1 className="text-danger text-center">You are not logged in</h1>
-          )}
           <h1>Top Bon</h1>
           <div className="row">
             {topPosts.map((post, index) => (
               <div key={index} className="col-lg-4">
                 <PostCard
-                  title={post.title}
-                  description={post.description}
+                  id={post.id}
+                  username={post.username}
+                  // title={post.title}
+                  body={post.body}
                   comments={post.comments}
                 />
               </div>
@@ -109,8 +112,9 @@ export default function Home() {
             {posts.map((post, index) => (
               <div key={index} className="col-lg-3">
                 <PostCard
-                  title={post.postTitle}
-                  description={post.postText}
+                  id={post.postID}
+                  username={post.username}
+                  body={post.body}
                   comments={post.comments}
                 />
               </div>

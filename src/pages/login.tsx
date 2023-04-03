@@ -7,8 +7,9 @@ import { useRouter } from "next/router";
 import FacebookIcon from "../../public/assets/icons/facebook.png";
 import GoogleIcon from "../../public/assets/icons/google.png";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { baseURL, getLogin, googleLogin } from "@/api/blogApi";
+import { getLogin, googleLogin } from "@/api/blogApi";
 import { useAlert } from "react-alert";
+import { baseURL } from "@/constants/constants";
 
 const Login = () => {
   const { login, logout, setUser, user, setIsLogin } = useContext(LoginContext);
@@ -41,9 +42,13 @@ const Login = () => {
 
   useEffect(() => {
     isLogin && alert.show("Logged in!");
-    setTimeout(() => {
+    const id = setTimeout(() => {
       isLogin && router.push("/");
-    }, 3000);
+    }, 2000);
+
+    return () => {
+      clearTimeout(id);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
 

@@ -5,7 +5,7 @@ import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import FacebookIcon from "../../public/assets/icons/facebook.png";
 import GoogleIcon from "../../public/assets/icons/google.png";
-import { baseURL, googleLogin, register } from "@/api/blogApi";
+import { googleLogin, register } from "@/api/blogApi";
 import Link from "next/link";
 import { GoogleLogin } from "react-google-login";
 import { googleClientId } from "@/constants/constants";
@@ -63,13 +63,6 @@ const SignUp = () => {
       <button className="btn btn-lg signup-btn" onClick={handleSubmit}>
         Sign up
       </button>
-      {/* <div className="social-sign">
-        <h6 className="social-sign-text">Or sign Up using</h6>
-        <Image src={FacebookIcon} alt="facebook-icon" className="social-icon" />
-        <Link href={`${baseURL}/auth/google`}>
-          <Image src={GoogleIcon} alt="google-icon" className="social-icon" />
-        </Link>
-      </div> */}
     </div>
   );
 };

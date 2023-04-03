@@ -14,3 +14,11 @@
 .nav-link:hover {
     color: #ff368d;
 }
+
+.profile-image {
+    margin-right: 20px;
+}
+
+.profile-image:hover {
+    cursor: pointer;
+}

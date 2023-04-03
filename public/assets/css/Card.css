@@ -7,7 +7,6 @@
 }
 
 .card {
-  margin: 7% 1%;
   border-radius: 10px;
   overflow: hidden;
   border: none;
@@ -15,13 +14,18 @@
   -webkit-box-shadow: 1px 15px 24px -8px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 1px 15px 24px -8px rgba(0, 0, 0, 0.75);
   transition: 0.3s;
+  text-decoration: none;
+  /* background-color: #c1f0ff; */
 }
 
-.card:hover {
-    transform: translate(0, -10px);
-    cursor: pointer;
+.hoverable {
+  margin: 7% auto;
 }
 
+.hoverable:hover {
+  transform: translate(0, -10px);
+  cursor: pointer;
+}
 
 .card-header {
   background-color: #ff368d;
@@ -30,7 +34,7 @@
 }
 
 .card-title {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 900;
   padding-top: 15px;
 }
@@ -50,6 +54,16 @@
   border: none;
 }
 
+.post-owner {
+  border-radius: 5px;
+}
+
+.post-owner-name {
+  margin-left: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
 .comment-profile-image {
   margin-right: 10px;
 }
@@ -62,4 +76,3 @@
 .comment-text {
   font-size: 0.8rem;
 }
-
