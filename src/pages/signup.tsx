@@ -1,16 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
 import CustomInput from "@/components/Layout/CustomInput";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
-import Image from "next/image";
-import FacebookIcon from "../../public/assets/icons/facebook.png";
-import GoogleIcon from "../../public/assets/icons/google.png";
-import { googleLogin, register } from "@/api/blogApi";
-import Link from "next/link";
-import { GoogleLogin } from "react-google-login";
-import { googleClientId } from "@/constants/constants";
-import { gapi, gapiComplete } from "gapi-script";
-import axios from "axios";
+import { register } from "@/api/blogApi";
 
 const SignUp = () => {
   const [formValues, setFormValues] = useState({

@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { shortText } from "@/utils/formatUtils";
 import Image from "next/image";
 import Link from "next/link";
 import React, { ReactNode, useEffect, useMemo, useState } from "react";
 
-import Person from "../../public/assets/images/Rubio_Circle.png";
+import Person from "/public/assets/images/Rubio_Circle.png";
 import ProfileLayout from "./Layout/ProfileLayout";
 
 const PostCard = (props: {
