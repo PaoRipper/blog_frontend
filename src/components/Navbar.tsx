@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useContext, useMemo } from "react";
 
-import BrandLogo from "../../public/assets/images/Rubio_Circle.png";
+import BrandLogo from "/public/assets/images/Rubio_Circle.png";
 
 const Header = () => {
   const { user, logout } = useContext(LoginContext);

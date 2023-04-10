@@ -4,10 +4,8 @@ import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import FacebookIcon from "../../public/assets/icons/facebook.png";
-import GoogleIcon from "../../public/assets/icons/google.png";
+import GoogleIcon from "/public/assets/icons/google.png";
 import React, { useContext, useEffect, useMemo, useState } from "react";
-import { getLogin, googleLogin } from "@/api/blogApi";
 import { useAlert } from "react-alert";
 import { baseURL } from "@/constants/constants";
 

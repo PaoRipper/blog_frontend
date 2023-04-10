@@ -4,15 +4,14 @@ import Navbar from "../components/Navbar";
 
 import "bootstrap/dist/css/bootstrap.css";
 
-import "../../public/assets/css/card.css";
-import "../../public/assets/css/layout.css";
-import "../../public/assets/css/navbar.css";
-import "../../public/assets/css/signup.css";
-import "../../public/assets/css/profile.css";
-import "../../public/assets/css/create.css";
+import "/public/assets/css/card.css";
+import "/public/assets/css/layout.css";
+import "/public/assets/css/navbar.css";
+import "/public/assets/css/signup.css";
+import "/public/assets/css/profile.css";
+import "/public/assets/css/create.css";
 
 import { LoginContextProvider } from "@/context/LoginContext";
-import { render } from "react-dom";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 
