@@ -9,7 +9,7 @@ import "/public/assets/css/Layout.css";
 import "/public/assets/css/Navbar.css";
 import "/public/assets/css/Signup.css";
 import "/public/assets/css/Profile.css";
-import "/public/assets/css/create.css";
+import "/public/assets/css/Create.css";
 
 import { LoginContextProvider } from "@/context/LoginContext";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
