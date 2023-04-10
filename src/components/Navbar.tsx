@@ -63,14 +63,15 @@ const Header = () => {
         <div className="collapse navbar-collapse" id="navbarContent">
           <ul className="navbar-nav ms-auto">
             {isLogin ? (
-              <li className="profile-image">
+              <Link className="profile-image" href="/profile">
                 <Image
                   src={BrandLogo}
                   alt="navbar-brand"
                   width={40}
                   height={40}
+                
                 />
-              </li>
+              </Link>
             ) : null}
             {filteredMenus.map((item, index) => (
               <li className="nav-item" key={index}>
