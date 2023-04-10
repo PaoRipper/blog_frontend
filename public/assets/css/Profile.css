@@ -1,5 +1,96 @@
+
+
 .profile-header {
-    font-size: 2rem;
-    font-weight: 900;
-    text-align: center;
+  font-size: 2rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.profile-type {
+  list-style: none;
+}
+
+.profile-list {
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-bottom: 3px solid #9b8be1;
+  width: fit-content;
+  display: inline-block;
+  margin: auto 20px auto;
+}
+
+.post-list {
+  background: #fff;
+  padding: 3%;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.46);
+  -webkit-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.46);
+  -moz-box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.46);
+  margin: 1rem 2rem;
+}
+
+.post-list-comment {
+    font-weight: bold;
+    line-height: 50px;
+}
+
+.post-list-title {
+    font-weight: bold;
+}
+
+.post-list-body {
+    line-height: 50px;
+}
+
+.post-list-badge {
+    line-height: 50px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.circle {
+    width: 14px;
+    height: 14px;
+    background-color: rgb(249, 87, 87);
+    border-radius: 100%;
+    display: inline-block;
+    margin: auto 10px;
+    position: relative;
+    top: 1px;
+}
+
+.post-list-btn {
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border: 3px solid #e3e7eb;
+    background-color: transparent;
+    color: #000;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding-right: 4rem;
+}
+
+.post-list-btn:hover {
+    cursor: pointer;
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border: 3px solid #e3e7eb;
+    background-color: #e3e7eb;
+}
+
+
+.profile-dropdown {
+    margin: 1rem 2rem;
+}
+
+.dropdown-toggle {
+    float: right;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.dropdown-item {
+    font-size: 1rem;
 }
