@@ -68,10 +68,6 @@ export default function Home() {
     });
   }, []);
 
-  console.log(posts);
-  
-
-
   useEffect(() => {
     const sessionId = cookies["connect.sid"];
     if (sessionId) {

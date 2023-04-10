@@ -39,11 +39,9 @@ const Login = () => {
   };
 
   useEffect(() => {
-    isLogin && alert.show("Logged in!");
     const id = setTimeout(() => {
       isLogin && router.push("/");
     }, 2000);
-
     return () => {
       clearTimeout(id);
     };

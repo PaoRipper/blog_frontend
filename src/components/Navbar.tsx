@@ -41,7 +41,9 @@ const Header = () => {
     if (isLogin) {
       return menu.key != "login" && menu.key != "sign";
     } else {
-      return menu.key != "profile" && menu.key != "logout" && menu.key != "create";
+      return (
+        menu.key != "profile" && menu.key != "logout" && menu.key != "create"
+      );
     }
   });
 
@@ -69,8 +71,8 @@ const Header = () => {
                   alt="navbar-brand"
                   width={40}
                   height={40}
-                
                 />
+                <span className="mx-3">{user.username} - id: {user.userID}</span>
               </Link>
             ) : null}
             {filteredMenus.map((item, index) => (

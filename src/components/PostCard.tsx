@@ -5,6 +5,7 @@ import React, { ReactNode, useEffect, useMemo, useState } from "react";
 
 import Person from "/public/assets/images/Rubio_Circle.png";
 import ProfileLayout from "./Layout/ProfileLayout";
+import { shortText } from "@/utils/formatUtils";
 
 const PostCard = (props: {
   id: number;
@@ -33,7 +34,7 @@ const PostCard = (props: {
             alt="commenter"
             className="comment-profile-image"
           />
-          <em className="comment-text">{props.comments[0]}</em>
+          <em className="comment-text">{shortText(props.comments[0]) }</em>
           <Link href={"#"} className="comment-see-more">
             {moreComment >= 1 ? `+${moreComment} more` : ""}
           </Link>
