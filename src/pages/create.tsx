@@ -1,30 +1,32 @@
 import { addPost } from "@/api/blogApi";
 import { LoginContext } from "@/context/LoginContext";
 import { useRouter } from "next/router";
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useAlert } from "react-alert";
 
 const Create = () => {
   const [bon, setBon] = useState("");
-  const [error, setError] = useState("");
   const router = useRouter();
   const alert = useAlert();
-  const { user } = useContext(LoginContext);
+  const { user, isLogin } = useContext(LoginContext);
 
   const handleSubmit = () => {
-    if (!bon) {
-      setError("Please bon");
-    } else {
-      user.userID && addPost(bon, user.userID);
-      alert.show("Bon successfully");
-      const id = setTimeout(() => {
-        router.push("/");
-      }, 2000);
-      return () => {
-        clearTimeout(id);
-      };
-    }
+    user.userID && addPost(bon, user.userID);
+    alert.success("Post successfully");
+    const id = setTimeout(() => {
+      router.push("/");
+    }, 2000);
+    return () => {
+      clearTimeout(id);
+    };
   };
+
+  useEffect(() => {
+    if (!isLogin) {
+      router.push('/');
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLogin]);
 
   return (
     <section id="create-section">
@@ -41,7 +43,7 @@ const Create = () => {
       />
       <div>
         <button
-          className="btn btn-md btn-primary submit-bon"
+          className="btn btn-lg btn-primary submit-bon"
           onClick={handleSubmit}
         >
           Submit
