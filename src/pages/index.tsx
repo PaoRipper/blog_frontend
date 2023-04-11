@@ -68,6 +68,7 @@ export default function Home() {
     });
   }, []);
 
+
   useEffect(() => {
     const sessionId = cookies["connect.sid"];
     if (sessionId) {
@@ -94,7 +95,6 @@ export default function Home() {
                 <PostCard
                   id={post.id}
                   username={post.username}
-                  // title={post.title}
                   body={post.body}
                   comments={post.comments}
                 />

@@ -71,6 +71,7 @@
 .comment-see-more {
   float: right;
   text-decoration: none;
+  color: rgb(70, 125, 255);
 }
 
 .comment-text {

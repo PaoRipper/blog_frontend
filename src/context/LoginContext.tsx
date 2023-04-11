@@ -17,6 +17,11 @@ type TUser = {
   userID: number | null;
 };
 
+type DecodedToken = {
+  iat: number;
+  exp: number;
+};
+
 type TContext = {
   login: (email: string, password: string, type: string) => any;
   logout: () => any;
@@ -86,17 +91,25 @@ export const LoginContextProvider = (props: { children: any }) => {
     if (window) {
       const token = window.localStorage.getItem("LOGIN_TOKEN");
       if (token) {
-        const decoded: TUser = jwt_decode(token);
-        const { auth, username, userID } = decoded;
-        setUser({
-          auth,
-          token: window!.localStorage!.getItem("LOGIN_TOKEN")!,
-          username,
-          userID,
-        });
-        setIsLogin(true);
+        const now = Math.floor(Date.now() / 1000);
+        const decoded: TUser & DecodedToken = jwt_decode(token);
+        const { auth, username, userID, exp } = decoded;
+        console.log(exp);
+        
+        if (exp < now) {
+          logout();
+        } else {
+          setUser({
+            auth,
+            token: window!.localStorage!.getItem("LOGIN_TOKEN")!,
+            username,
+            userID,
+          });
+          setIsLogin(true);
+        }
       }
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
