@@ -1,17 +1,18 @@
 import PostCard from "@/components/PostCard";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { getAllPosts, googleLogin } from "@/api/blogApi";
 import { values } from "lodash";
 import { LoginContext } from "@/context/LoginContext";
 import { useCookies } from "react-cookie";
+import { GetServerSidePropsContext } from "next";
 
 export type TPosts = {
   commentID: number;
   commentText: string;
   created_at: string | null;
   postID: number;
-  username: string,
-  postText: string,
+  username: string;
+  postText: string;
   body: string;
   userID: string;
   comments: string[];
@@ -19,81 +20,80 @@ export type TPosts = {
   commentUser: string;
 };
 
-export default function Home() {
-  const { user, setUser, setIsLogin } = useContext(LoginContext);
-  const [posts, setPosts] = useState<TPosts[]>([]);
-  const [cookies, setCookies, removeCookie] = useCookies();
+type TPostsSorted = {
+  topPosts: TPosts[];
+  otherPosts: TPosts[];
+};
 
-  const topPosts = [
-    {
-      id: 1,
-      body: "ดับเบิ้ลห",
-      username: "Paori",
-      comments: ["เบิ้มๆ คือลือน่ะ"],
-    },
-    {
-      id: 2,
-      body: "milf really is the best guys",
-      username: "NT",
-      comments: ["โคตรแจ่ม"],
-    },
-    {
-      id: 3,
-      body: "235126",
-      username: "RRRR",
-      comments: ["359456", "537891"],
-    },
-  ];
+export default function Home(props: { data: TPosts[] }) {
+  const { setUser } = useContext(LoginContext);
+  const [posts, setPosts] = useState<TPosts[]>([]);
+  const [cookies] = useCookies();
+  const [postsSorted, setPostsSorted] = useState<TPostsSorted>({
+    topPosts: [],
+    otherPosts: [],
+  });
 
   useEffect(() => {
-    getAllPosts().then((res) => {
-      setPosts(
-        values(
-          res.reduce((acc: any, obj: any) => {
-            const { postID, postText, commentText, username } = obj;
-            if (acc[postID]) {
-              acc[postID].comments.push(commentText);
-            } else {
-              acc[postID] = {
-                postID,
-                username,
-                body: postText,
-                comments: [commentText],
-              };
-            }
-            return acc;
-          }, {})
-        )
-      );
-    });
+    setPosts(
+      values(
+        props.data.reduce((acc: any, obj: TPosts) => {
+          const { postID, postText, commentText, username } = obj;
+          if (acc[postID]) {
+            acc[postID].comments.push(commentText);
+          } else {
+            acc[postID] = {
+              postID,
+              username,
+              body: postText,
+              comments: [commentText],
+            };
+          }
+          return acc;
+        }, {})
+      )
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    const result: TPostsSorted = posts.reduce(
+      (acc: any, post: TPosts) => {
+        if (post.comments.length >= 1 && acc.topPosts.length < 3) {
+          acc.topPosts.push(post);
+        } else {
+          acc.otherPosts.push(post);
+        }
+        return acc;
+      },
+      { topPosts: [], otherPosts: [] }
+    );
+    setPostsSorted(result);
+  }, [posts]);
 
   useEffect(() => {
     const sessionId = cookies["connect.sid"];
     if (sessionId) {
       googleLogin().then((res) => {
-        const {userID, username} = res.data.user
+        const { userID, username } = res.data.user;
         const { auth, connect_sid } = res.data;
         setUser({ auth, token: connect_sid, userID, username });
-        // setIsLogin(true)
         window && window.localStorage.setItem("isLogin", "true");
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-
   return (
     <>
       <section id="top-section">
         <section id="card-section">
-          <h1>Top Bon</h1>
+          <h1 className="fw-bold">TOP BON</h1>
           <div className="row">
-            {topPosts.map((post, index) => (
+            {postsSorted.topPosts.map((post, index) => (
               <div key={index} className="col-lg-4">
                 <PostCard
-                  id={post.id}
+                  id={post.postID}
                   username={post.username}
                   body={post.body}
                   comments={post.comments}
@@ -106,9 +106,9 @@ export default function Home() {
 
       <section id="middle-section">
         <section id="card-section">
-          <h1>Other Bon</h1>
+          <h1 className="fw-bold">OTHERS BON</h1>
           <div className="row">
-            {posts.map((post, index) => (
+            {postsSorted.otherPosts.map((post, index) => (
               <div key={index} className="col-lg-3">
                 <PostCard
                   id={post.postID}
@@ -124,3 +124,14 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
+  const data = await getAllPosts().then((res) => res);
+  return {
+    props: {
+      data,
+    },
+  };
+};
