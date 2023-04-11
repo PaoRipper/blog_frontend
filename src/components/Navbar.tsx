@@ -52,7 +52,7 @@ const Header = () => {
       <div className="container">
         <div>
           <Link href="/" className="navbar-brand">
-            Bon
+            Bon (บ่น)
           </Link>
         </div>
         <button
