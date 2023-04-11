@@ -59,8 +59,6 @@ const PostCard = (props: {
     }
   }, []);
 
-  console.log(hideComment);
-
   return clickable ? (
     <Link
       className={`card hoverable ${props.className}`}

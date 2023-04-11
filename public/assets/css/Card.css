@@ -98,3 +98,14 @@
 .comment-text {
   font-size: 0.8rem;
 }
+
+@media (max-width: 991px) {
+  .card {
+    width: 80%;
+    max-height: max-content;
+  }
+
+  .card-text {
+    width: 80%;
+  }
+}
