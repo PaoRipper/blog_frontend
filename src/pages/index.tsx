@@ -5,6 +5,8 @@ import { values } from "lodash";
 import { LoginContext } from "@/context/LoginContext";
 import { useCookies } from "react-cookie";
 import { GetServerSidePropsContext } from "next";
+import Snowfall from "react-snowfall";
+import SnowTools from "@/components/SnowTools";
 
 export type TPosts = {
   commentID: number;
@@ -25,6 +27,11 @@ type TPostsSorted = {
   otherPosts: TPosts[];
 };
 
+export type TSnow = {
+  snowflakeCount: number;
+  wind: [number, number];
+};
+
 export default function Home(props: { data: TPosts[] }) {
   const { setUser } = useContext(LoginContext);
   const [posts, setPosts] = useState<TPosts[]>([]);
@@ -32,6 +39,10 @@ export default function Home(props: { data: TPosts[] }) {
   const [postsSorted, setPostsSorted] = useState<TPostsSorted>({
     topPosts: [],
     otherPosts: [],
+  });
+  const [snow, setSnow] = useState<TSnow>({
+    snowflakeCount: 80,
+    wind: [3, 5],
   });
 
   useEffect(() => {
@@ -84,11 +95,22 @@ export default function Home(props: { data: TPosts[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(snow);
+
   return (
     <>
       <section id="top-section">
+        <Snowfall
+          style={{ position: "fixed", width: "100vw", height: "100vh" }}
+          color="#FF4378"
+          snowflakeCount={snow.snowflakeCount}
+          wind={snow.wind}
+        />
         <section id="card-section">
-          <h1 className="fw-bold">TOP BON</h1>
+          <div className="d-flex justify-content-between">
+            <h1 className="fw-bold">TOP BON</h1>
+            <SnowTools setSnow={setSnow} />
+          </div>
           <div className="row">
             {postsSorted.topPosts.map((post, index) => (
               <div key={index} className="col-lg-4">
@@ -103,7 +125,6 @@ export default function Home(props: { data: TPosts[] }) {
           </div>
         </section>
       </section>
-
       <section id="middle-section">
         <section id="card-section">
           <h1 className="fw-bold">OTHERS BON</h1>

@@ -10,6 +10,7 @@ import "/public/assets/css/Navbar.css";
 import "/public/assets/css/Signup.css";
 import "/public/assets/css/Profile.css";
 import "/public/assets/css/Create.css";
+import "/public/assets/css/Snow.css";
 
 import { LoginContextProvider } from "@/context/LoginContext";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
@@ -29,7 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
     require("bootstrap/dist/js/bootstrap.bundle.min.js");
   }, []);
   return (
-    <AlertProvider template={AlertTemplate as any}{...options}>
+    <AlertProvider template={AlertTemplate as any} {...options}>
       <LoginContextProvider>
         <Navbar />
         <Component {...pageProps} />;
