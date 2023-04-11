@@ -34,10 +34,10 @@ const PostCard = (props: {
             alt="commenter"
             className="comment-profile-image"
           />
-          <em className="comment-text">{shortText(props.comments[0]) }</em>
-          <Link href={"#"} className="comment-see-more">
+          <em className="comment-text">{shortText(props.comments[0])}</em>
+          <span className="comment-see-more">
             {moreComment >= 1 ? `+${moreComment} more` : ""}
-          </Link>
+          </span>
         </div>
       );
       comment && setComment(comment);
