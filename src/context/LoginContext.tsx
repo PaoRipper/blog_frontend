@@ -94,8 +94,6 @@ export const LoginContextProvider = (props: { children: any }) => {
         const now = Math.floor(Date.now() / 1000);
         const decoded: TUser & DecodedToken = jwt_decode(token);
         const { auth, username, userID, exp } = decoded;
-        console.log(exp);
-        
         if (exp < now) {
           logout();
         } else {
