@@ -8,10 +8,12 @@ import GoogleIcon from "/public/assets/icons/google.png";
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useAlert } from "react-alert";
 import { baseURL } from "@/constants/constants";
+import { useTimeout } from "@/hooks/useTimeout";
 
 const Login = () => {
   const { login, logout, setUser, user, setIsLogin } = useContext(LoginContext);
   const alert = useAlert();
+  const { delayCallback } = useTimeout(3);
   const isLogin = useMemo(() => user.auth, [user]);
   const router = useRouter();
   const [formValues, setFormValues] = useState({
@@ -39,13 +41,10 @@ const Login = () => {
   };
 
   useEffect(() => {
-    const id = setTimeout(() => {
+    delayCallback(() => {
       isLogin && router.push("/");
-    }, 2000);
-    return () => {
-      clearTimeout(id);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLogin]);
 
   return (

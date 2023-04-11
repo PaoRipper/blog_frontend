@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import CustomInput from "@/components/Layout/CustomInput";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { register } from "@/api/blogApi";
+import { useAlert } from "react-alert";
+import { LoginContext } from "@/context/LoginContext";
+import { useTimeout } from "@/hooks/useTimeout";
+import { useRouter } from "next/router";
 
 const SignUp = () => {
   const [formValues, setFormValues] = useState({
@@ -9,6 +13,10 @@ const SignUp = () => {
     email: "",
     password: "",
   });
+  const alert = useAlert();
+  const router = useRouter();
+  const { login, user } = useContext(LoginContext);
+  const { delayCallback } = useTimeout(3);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormValues((prev) => {
@@ -20,7 +28,24 @@ const SignUp = () => {
   };
 
   const handleSubmit = () => {
-    register(formValues.username, formValues.email, formValues.password, "default")
+    register(
+      formValues.username,
+      formValues.email,
+      formValues.password,
+      "default"
+    )
+      .then((res) => {
+        alert.success("Sign up successfully!");
+        delayCallback(() => {
+          login(formValues.email, formValues.password, "default");
+          if (user) {
+            router.push("/");
+          }
+        });
+      })
+      .catch((e) => {
+        alert.error("Something went wrong");
+      });
   };
 
   return (
