@@ -7,6 +7,7 @@ const CustomInput = (props: {
   icon: IconDefinition;
   name: string;
   type: string;
+  label?: string;
   placeholder: string;
   arabLabel?: string;
   className?: string;
@@ -15,7 +16,7 @@ const CustomInput = (props: {
 
   return (
     <div className="custom-input-group">
-      <label className="input-label">{props.name}</label>
+      <label className="input-label">{props.label || props.name}</label>
       <div className="input-group mb-3">
         <div className="input-group-prepend">
           <span className="input-group-text h-100">

@@ -8,15 +8,21 @@ import ProfileLayout from "./Layout/ProfileLayout";
 import { shortText } from "@/utils/formatUtils";
 
 const PostCard = (props: {
+  className?: string;
+  headerClassName?: string;
+  bodyClassName?: string;
+  footerClassName?: string;
   id: number;
   username: string;
   body: string;
   comments: string[];
   clickable?: boolean;
+  hideComment?: boolean;
 }) => {
   const [moreComment, setMoreComment] = useState<number>(0);
   const [comment, setComment] = useState<ReactNode>();
   const [clickable, setClickable] = useState(true);
+  const [hideComment, setHideComment] = useState(false);
 
   useEffect(() => {
     setMoreComment(props.comments.length - 1);
@@ -48,27 +54,45 @@ const PostCard = (props: {
     if (props.clickable === false) {
       setClickable(false);
     } else setClickable(true);
+    if (props.hideComment === true) {
+      setHideComment(true);
+    }
   }, []);
 
+  console.log(hideComment);
+
   return clickable ? (
-    <Link className="card hoverable" href={`post/${props.id}`}>
-      <div className="card-header">
+    <Link
+      className={`card hoverable ${props.className}`}
+      href={`post/${props.id}`}
+    >
+      <div className={`card-header ${props.headerClassName}`}>
         <ProfileLayout username={props.username} />
       </div>
-      <div className="card-body">
-        <p className="card-text">{props.body}</p>
+      <div className={`card-body ${props.bodyClassName}`}>
+        <p className={`card-text`}>{props.body}</p>
       </div>
-      <div className="card-footer">{comment}</div>
+      <div
+        hidden={hideComment}
+        className={`card-footer ${props.footerClassName}`}
+      >
+        {comment}
+      </div>
     </Link>
   ) : (
-    <div className={`card`}>
-      <div className="card-header">
-        <ProfileLayout username={props.username} />
+    <div className={`card ${props.className}`}>
+      <div className={`card-header ${props.headerClassName}`}>
+        <ProfileLayout username={props.username} imgClassName="profile-img" profileClassName="profile-name"/>
       </div>
-      <div className="card-body">
-        <p className="card-text">{props.body}</p>
+      <div className={`card-body ${props.bodyClassName}`}>
+        <p className={`card-text fs-2`}>{props.body}</p>
       </div>
-      <div className="card-footer">{comment}</div>
+      <div
+        hidden={hideComment}
+        className={`card-footer ${props.footerClassName}`}
+      >
+        {comment}
+      </div>
     </div>
   );
 };

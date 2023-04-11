@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import CustomInput from "@/components/Layout/CustomInput";
 import { faUser, faLock } from "@fortawesome/free-solid-svg-icons";
 import { register } from "@/api/blogApi";
@@ -7,24 +7,54 @@ import { LoginContext } from "@/context/LoginContext";
 import { useTimeout } from "@/hooks/useTimeout";
 import { useRouter } from "next/router";
 
+type TSignUp = {
+  username: string;
+  email: string;
+  password: string;
+  password2: string;
+};
+
 const SignUp = () => {
-  const [formValues, setFormValues] = useState({
+  const [formValues, setFormValues] = useState<TSignUp>({
     username: "",
     email: "",
     password: "",
+    password2: "",
   });
+  const [errorText, setErrorText] = useState({
+    email: "",
+    password: "",
+  });
+  const error = useMemo(() => {
+    if (errorText.email.length === 0 && errorText.password.length === 0) {
+      return false;
+    }
+    return true;
+  }, [errorText]);
   const alert = useAlert();
   const router = useRouter();
   const { login, user } = useContext(LoginContext);
   const { delayCallback } = useTimeout(3);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues((prev) => {
-      return {
-        ...prev,
-        [e?.target.name]: e?.target.value,
-      };
-    });
+    const eventTarget = e?.target;
+    if (eventTarget.name === "email") {
+      if (eventTarget.validity.valid) {
+        setErrorText((prev) => ({
+          ...prev,
+          email: "",
+        }));
+      } else {
+        setErrorText((prev) => ({
+          ...prev,
+          email: "Email must be in form of email",
+        }));
+      }
+    }
+    setFormValues((prev) => ({
+      ...prev,
+      [e?.target.name]: e?.target.value,
+    }));
   };
 
   const handleSubmit = () => {
@@ -34,7 +64,7 @@ const SignUp = () => {
       formValues.password,
       "default"
     )
-      .then((res) => {
+      .then(() => {
         alert.success("Sign up successfully!");
         delayCallback(() => {
           login(formValues.email, formValues.password, "default");
@@ -47,6 +77,20 @@ const SignUp = () => {
         alert.error("Something went wrong");
       });
   };
+
+  useEffect(() => {
+    if (formValues.password !== formValues.password2) {
+      setErrorText((prev) => ({
+        ...prev,
+        password: "Password and confirm password need to match",
+      }));
+    } else {
+      setErrorText((prev) => ({
+        ...prev,
+        password: "",
+      }));
+    }
+  }, [formValues]);
 
   return (
     <div className="signup">
@@ -63,10 +107,11 @@ const SignUp = () => {
         icon={faUser}
         placeholder="Type your email"
         name="email"
-        type="text"
+        type="email"
         className="custom-input"
         onChange={handleChange}
       />
+      <span className="signup-error">{errorText?.email}</span>
       <CustomInput
         icon={faLock}
         placeholder="Type your password"
@@ -75,8 +120,22 @@ const SignUp = () => {
         className="custom-input"
         onChange={handleChange}
       />
+      <CustomInput
+        icon={faLock}
+        placeholder="Type your password"
+        label="Confirm password"
+        name="password2"
+        type="password"
+        className="custom-input"
+        onChange={handleChange}
+      />
+      <span className="signup-error">{errorText?.password}</span>
       <span className="forgot-password">Forgot password?</span>
-      <button className="btn btn-lg signup-btn" onClick={handleSubmit}>
+      <button
+        className={`btn btn-lg btn-lg signup-btn ${error ? "disabled" : ""}`}
+        disabled={error}
+        onClick={handleSubmit}
+      >
         Sign up
       </button>
     </div>

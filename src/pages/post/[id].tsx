@@ -23,7 +23,7 @@ type TPost = {
 const PostID = (props: { data: TPosts[] }) => {
   const transformedPost = useMemo(() => {
     return props.data.reduce((result: any, current: TPosts) => {
-      const { postID, postText, commentUser, comment, username } = current;
+      const { postID, body, commentUser, comment, username } = current;
       // Check if there's an existing entry for this postID in the result array
       const existingEntry: TPost | undefined = result.find(
         (entry: TPosts) => entry.postID === postID
@@ -37,7 +37,7 @@ const PostID = (props: { data: TPosts[] }) => {
         result.push({
           postID,
           username,
-          body: postText,
+          body,
           comments: [{ userId: commentUser, comment }],
         });
       }
@@ -52,11 +52,15 @@ const PostID = (props: { data: TPosts[] }) => {
       {transformedPost.map((post: TPost) => (
         <div key={post.postID}>
           <PostCard
+            className="card-by-id"
+            bodyClassName="body-card-by-id"
+            headerClassName="header-card-by-id"
             id={post.postID}
             username={post.username}
             body={post.body}
             comments={[post.comments[0].comment]}
             clickable={false}
+            hideComment={true}
           />
         </div>
       ))}
