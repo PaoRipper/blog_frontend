@@ -6,6 +6,11 @@
   text-align: center;
 }
 
+.profile-group {
+    display: flex;
+    align-items: center;
+}
+
 .profile-img {
     width: 40px;
     height: 40px;
@@ -19,6 +24,10 @@
 
 .profile-type {
   list-style: none;
+}
+
+.profile-owner {
+    margin-left: 10px;
 }
 
 .profile-list {

@@ -10,7 +10,7 @@ const ProfileLayout = (props: {
 
 }) => {
   return (
-    <div>
+    <div className="profile-group">
       <Image
         src={Person}
         width={30}
@@ -18,7 +18,7 @@ const ProfileLayout = (props: {
         alt="post-owner"
         className={`${props.imgClassName}`}
       />
-      <span className={`${props.profileClassName}`}>{props.username}</span>
+      <span className={`profile-owner ${props.profileClassName}`}>{props.username}</span>
     </div>
   );
 };
