@@ -70,12 +70,12 @@ const Login = () => {
       <button className="btn btn-lg signup-btn" onClick={handleSubmit}>
         Login
       </button>
-      <div className="social-sign">
+      {/* <div className="social-sign">
         <h6 className="social-sign-text">Or login using</h6>
         <Link href="#" onClick={handleGoogleLogin}>
           <Image src={GoogleIcon} alt="google-icon" className="social-icon" />
         </Link>
-      </div>
+      </div> */}
     </div>
   );
 };

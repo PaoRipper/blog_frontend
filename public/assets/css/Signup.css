@@ -43,9 +43,13 @@
 
 .forgot-password {
   float: right;
-  font-size: 0.8rem;
+  font-size: 1rem;
   margin: 10px auto 30px;
   cursor: pointer;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
 }
 
 .signup-btn {
