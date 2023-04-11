@@ -30,10 +30,22 @@
   height: 3rem;
 }
 
+.disabled {
+  --bs-btn-disabled-bg: #ff368d;
+  --bs-btn-disabled-color: #ffffff;
+}
+
+.signup-error {
+  font-size: 0.9rem;
+  color: #ff0d0d;
+  float: right;
+}
+
 .forgot-password {
   float: right;
-  font-size: 16px;
-  margin: 0 auto 30px;
+  font-size: 0.8rem;
+  margin: 10px auto 30px;
+  cursor: pointer;
 }
 
 .signup-btn {
@@ -50,18 +62,18 @@
 }
 
 .social-sign {
-    margin: 3rem auto;
-    font-size: 0.2rem;
+  margin: 3rem auto;
+  font-size: 0.2rem;
 }
 
 .social-sign-text {
-    font-size: 1rem
+  font-size: 1rem;
 }
 
 .social-icon {
-    width: 40px;
-    height: 40px;
-    margin: 15px 5px;
+  width: 40px;
+  height: 40px;
+  margin: 15px 5px;
 }
 
 .social-icon:hover {

@@ -5,6 +5,9 @@ import Person from "/public/assets/images/Rubio_Circle.png"
 
 const ProfileLayout = (props: {
     username: string
+    imgClassName?: string,
+    profileClassName?: string,
+
 }) => {
   return (
     <div>
@@ -13,9 +16,9 @@ const ProfileLayout = (props: {
         width={30}
         height={30}
         alt="post-owner"
-        className="post-owner"
+        className={`${props.imgClassName}`}
       />
-      <span className="post-owner-name">{props.username}</span>
+      <span className={`${props.profileClassName}`}>{props.username}</span>
     </div>
   );
 };
