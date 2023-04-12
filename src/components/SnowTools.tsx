@@ -23,6 +23,7 @@ const SnowTools = (props: {
         onClick={() =>
           props.setSnow((prev) => ({ ...prev, snowflakeCount: 30 }))
         }
+        value={props.snow.color}
       >
         Little snow
       </button>
