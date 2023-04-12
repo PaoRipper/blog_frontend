@@ -28,6 +28,7 @@ type TPostsSorted = {
 };
 
 export type TSnow = {
+  color: string;
   snowflakeCount: number;
   wind: [number, number];
 };
@@ -41,9 +42,13 @@ export default function Home(props: { data: TPosts[] }) {
     otherPosts: [],
   });
   const [snow, setSnow] = useState<TSnow>({
+    color: "#FF4378",
     snowflakeCount: 80,
     wind: [3, 5],
   });
+
+  console.log(snow.color);
+  
 
   useEffect(() => {
     setPosts(
@@ -95,21 +100,19 @@ export default function Home(props: { data: TPosts[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(snow);
-
   return (
     <>
       <section id="top-section">
         <Snowfall
           style={{ position: "fixed", width: "100vw", height: "100vh" }}
-          color="#FF4378"
+          color={snow.color}
           snowflakeCount={snow.snowflakeCount}
           wind={snow.wind}
         />
         <section id="card-section">
           <div className="d-flex justify-content-between">
             <h1 className="fw-bold">TOP BON</h1>
-            <SnowTools setSnow={setSnow} />
+            <SnowTools snow={snow} setSnow={setSnow} />
           </div>
           <div className="row">
             {postsSorted.topPosts.map((post, index) => (

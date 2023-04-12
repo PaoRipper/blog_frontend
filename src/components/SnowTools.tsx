@@ -1,9 +1,23 @@
 import { TSnow } from "@/pages";
 import React, { Dispatch, SetStateAction } from "react";
+import { debounce } from "lodash";
 
-const SnowTools = (props: { setSnow: Dispatch<SetStateAction<TSnow>> }) => {
+const SnowTools = (props: {
+  snow: TSnow;
+  setSnow: Dispatch<SetStateAction<TSnow>>;
+}) => {
+  const debouncedSetColor = debounce((colorValue: string) => {
+    props.setSnow((prev) => ({ ...prev, color: colorValue }));
+  }, 300);
+
+  const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    debouncedSetColor(event.target.value);
+  };
+
   return (
     <div className="d-flex justify-content-center align-items-center">
+      <span>Color:</span>
+      <input type="color" onChange={(e) => handleColorChange(e)} className="snow-color-input"/>
       <button
         className="btn btn-sm btn-primary little-snow"
         onClick={() =>

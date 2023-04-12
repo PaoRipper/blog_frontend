@@ -12,7 +12,24 @@
 .heavy-snow {
   margin: auto 10px;
   background-color: #ff1d92;
-  border: none;
+  border-radius: 10px;
+}
+
+.snow-color-input {
+  -webkit-appearance: none;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 60px;
+  margin-left: 10px;
+}
+
+.snow-color-input::-webkit-color-swatch-wrapper {
+	padding: 0;
+}
+.snow-color-input::-webkit-color-swatch {
+	border: none;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
@@ -39,3 +56,5 @@
     box-shadow: -80px 0 0 80px #3ffe62;
   }
 }
+
+
