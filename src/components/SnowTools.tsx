@@ -17,13 +17,17 @@ const SnowTools = (props: {
   return (
     <div className="d-flex justify-content-center align-items-center">
       <span>Color:</span>
-      <input type="color" onChange={(e) => handleColorChange(e)} className="snow-color-input"/>
+      <input
+        type="color"
+        onChange={(e) => handleColorChange(e)}
+        className="snow-color-input"
+        value={props.snow.color}
+      />
       <button
         className="btn btn-sm btn-primary little-snow"
         onClick={() =>
           props.setSnow((prev) => ({ ...prev, snowflakeCount: 30 }))
         }
-        value={props.snow.color}
       >
         Little snow
       </button>
