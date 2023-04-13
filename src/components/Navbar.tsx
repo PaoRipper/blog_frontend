@@ -65,7 +65,7 @@ const Header = () => {
         <div className="collapse navbar-collapse" id="navbarContent">
           <ul className="navbar-nav ms-auto">
             {isLogin ? (
-              <Link className="profile-image" href="/profile">
+              <Link className="profile-image" href={`user/${user.userID}`}>
                 <Image
                   src={BrandLogo}
                   alt="navbar-brand"

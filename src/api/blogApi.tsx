@@ -1,15 +1,12 @@
 import { baseURL } from "@/constants/constants";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 export const getAllPosts = async () => {
   const data = await axios.get(`${baseURL}/posts`).then((res) => res.data);
   return data;
 };
 
-export const addPost = async (
-  body: String,
-  userID: Number
-) => {
+export const addPost = async (body: String, userID: Number) => {
   const data = await axios
     .post(`${baseURL}/post`, { body, userID })
     .then((res) => res.data);
@@ -47,6 +44,14 @@ export const googleLogin = async () => {
 };
 
 export const getPostById = async (id: number) => {
-  const data = await axios.get(`${baseURL}/post/${id}`).then(res => res.data);
+  const data = await axios.get(`${baseURL}/post/${id}`).then((res) => res.data);
+  return data;
+};
+
+export const getPostByUserId = async (id: number, ...params: any) => {
+  const sortBy = params[0]?.sortBy
+  const data = await axios
+    .get(`${baseURL}/users/${id}/posts?sortBy=${sortBy}`)
+    .then((res) => res.data);
   return data;
 };
