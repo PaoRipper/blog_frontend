@@ -47,9 +47,6 @@ export default function Home(props: { data: TPosts[] }) {
     wind: [3, 5],
   });
 
-  console.log(snow.color);
-  
-
   useEffect(() => {
     setPosts(
       values(

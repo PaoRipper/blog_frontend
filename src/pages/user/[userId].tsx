@@ -1,11 +1,12 @@
-import { getPostByUserId } from "@/api/blogApi";
+import { deletePostById, getPostByUserId } from "@/api/blogApi";
 import Dropdown from "@/components/Dropdown";
 import PostList from "@/components/Layout/PostList";
 import { LoginContext } from "@/context/LoginContext";
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
+import { GetServerSidePropsContext } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState, useContext, useEffect, useMemo } from "react";
+import { useAlert } from "react-alert";
 
 export type TPostList = {
   postID: number;
@@ -18,6 +19,7 @@ const Profile = (props: { data: TPostList[] }) => {
   const { isLogin } = useContext(LoginContext);
   const router = useRouter();
   const userId = Number(router.query.userId);
+  const alert = useAlert();
   const dropdownItems = ["Most comments", "Less comments"];
   const [selectedValue, setSelectedValue] = useState(dropdownItems[0]);
   const [posts, setPosts] = useState<TPostList[]>(props.data);
@@ -41,10 +43,24 @@ const Profile = (props: { data: TPostList[] }) => {
     };
   }, [selectedValue]);
 
+  const fetchPosts = async () => {
+    const data = await getPostByUserId(userId, queryFilter);
+    setPosts(data);
+  };
+
+  const handleDeletePost = async (id: number) => {
+    const data = await deletePostById(id);
+    if (data.message == "success") {
+      fetchPosts();
+      alert.success("Delete success!");
+    } else {
+      alert.success("Delete error!");
+    }
+  };
+
   useEffect(() => {
-    getPostByUserId(userId, queryFilter).then((res) => {
-      setPosts(res);
-    });
+    fetchPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId, queryFilter]);
 
   return (
@@ -59,7 +75,7 @@ const Profile = (props: { data: TPostList[] }) => {
           <ul className="profile-type">
             <li className="profile-list">My Posts ({posts.length})</li>
           </ul>
-          <PostList posts={posts} />
+          <PostList posts={posts} handleDeletePost={handleDeletePost} />
         </div>
       ) : (
         <div className="container no-post">

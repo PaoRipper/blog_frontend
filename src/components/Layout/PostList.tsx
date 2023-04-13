@@ -1,20 +1,23 @@
+import { deletePostById } from "@/api/blogApi";
 import { TPostList } from "@/pages/user/[userId]";
 import { shortText } from "@/utils/formatUtils";
 import React from "react";
 
-const PostList = (props: { posts: TPostList[] }) => {
-
+const PostList = (props: {
+  posts: TPostList[];
+  handleDeletePost: (id: number) => void;
+}) => {
   const processCommentsCount = (comment_count: number) => {
     if (comment_count > 0) {
       if (comment_count === 1) {
-        return `${comment_count} comment`
+        return `${comment_count} comment`;
       } else {
-        return `${comment_count} comments`
+        return `${comment_count} comments`;
       }
     } else {
-      return "0 comment"
+      return "0 comment";
     }
-  }
+  };
 
   return (
     <div>
@@ -33,9 +36,12 @@ const PostList = (props: { posts: TPostList[] }) => {
               <h4 className="post-list-badge">Immortal!</h4>
             </div>
             <div className="col-lg-3">
-              <h4 className="btn btn-lg post-list-btn">
+              <button
+                className="btn btn-lg post-list-btn"
+                onClick={() => props.handleDeletePost(post.postID)}
+              >
                 <div className="circle"></div>Delete
-              </h4>
+              </button>
             </div>
           </div>
         </div>
