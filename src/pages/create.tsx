@@ -15,7 +15,7 @@ const Create = () => {
     alert.success("Post successfully");
     const id = setTimeout(() => {
       router.push("/");
-    }, 2000);
+    }, 1000);
     return () => {
       clearTimeout(id);
     };

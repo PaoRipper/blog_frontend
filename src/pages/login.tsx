@@ -11,9 +11,9 @@ import { baseURL } from "@/constants/constants";
 import { useTimeout } from "@/hooks/useTimeout";
 
 const Login = () => {
-  const { login, logout, setUser, user, setIsLogin } = useContext(LoginContext);
+  const { login, user } = useContext(LoginContext);
   const alert = useAlert();
-  const { delayCallback } = useTimeout(3);
+  const { delayCallback } = useTimeout(1);
   const isLogin = useMemo(() => user.auth, [user]);
   const router = useRouter();
   const [formValues, setFormValues] = useState({

@@ -70,40 +70,30 @@ const PostCard = (props: {
     }
   }, []);
 
-  const handleLinkClick = (e: any) => {
-    console.log(e.target.classList);
-    if (
-      e.target.classList.contains("ellipsis-icon") ||
-      e.target.classList.contains("dropdown-item") ||
-      e.target.classList.contains("btn-ellipsis")
-    ) {
-    } else {
-      router.push(`post/${props.id}`);
-    }
-  };
-
-  const handleFollow = (e: any) => {
+  const handleFollow = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     e.preventDefault();
     const userId = user.userID;
     if (userId) {
       follow(userId, props.id).then((res) => {
         if (res.status === 201) {
-          alert.success("Follow success!");
+          alert.success("Follow!");
         } else {
-          alert.error("Follow failed");
+          alert.error("Something went wrong!");
         }
       });
     }
   };
 
   return clickable ? (
-    <div className={`card hoverable`} onClick={(e) => handleLinkClick(e)}>
+    <Link className={`card hoverable`} href={`post/${props.id}`}>
       <div className={`card-header`}>
         <ProfileLayout username={props.username} />
         <CustomDropdown
           dropdownItems={["Follow post"]}
-          onClick={(e) => handleFollow(e)}
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+            handleFollow(e);
+          }}
           type="DROPUP"
           icon={{ icon: faEllipsis, className: "ellipsis-icon", size: "xl" }}
           arrow={false}
@@ -116,7 +106,7 @@ const PostCard = (props: {
       <div hidden={hideComment} className={`card-footer`}>
         {comment}
       </div>
-    </div>
+    </Link>
   ) : (
     <div className={`card ${props.className}`}>
       <div className={`card-header ${props.headerClassName}`}>

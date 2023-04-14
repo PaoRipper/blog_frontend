@@ -36,7 +36,7 @@ const CustomDropdown = (props: {
         type="button"
         id="drop-toggle"
         data-bs-toggle="dropdown"
-        aria-expanded="false"
+        aria-expanded="true"
       >
         {props.currentValue ? props.currentValue : ""}{" "}
         {props.icon ? (
@@ -44,6 +44,7 @@ const CustomDropdown = (props: {
             icon={props.icon.icon}
             size={props.icon.size || "lg"}
             className={`${props.icon.className ? props.icon.className : ""}`}
+            onClick={(e: any) => e.preventDefault()}
           />
         ) : (
           ""
@@ -52,7 +53,7 @@ const CustomDropdown = (props: {
       <ul className="dropdown-menu" aria-labelledby="drop-toggle">
         {props.dropdownItems.map((item) => (
           <li key={item}>
-            <a className="dropdown-item" href="#" onClick={props.onClick}>
+            <a className="dropdown-item" href="#" onClick={props.onClick && props.onClick}>
               {item}
             </a>
           </li>
