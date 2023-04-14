@@ -1,4 +1,5 @@
 import { deletePostById, getPostByUserId } from "@/api/blogApi";
+import CustomDropdown from "@/components/CustomDropdown";
 import Dropdown from "@/components/Dropdown";
 import PostList from "@/components/Layout/PostList";
 import { LoginContext } from "@/context/LoginContext";
@@ -67,10 +68,12 @@ const Profile = (props: { data: TPostList[] }) => {
     <section id="profile-section">
       {posts.length > 0 ? (
         <div className="container">
-          <Dropdown
+          <CustomDropdown
             dropdownItems={dropdownItems}
             currentValue={selectedValue}
             onClick={(e) => handleDropdownClick(e)}
+            arrow={true}
+            className="profile-dropdown"
           />
           <ul className="profile-type">
             <li className="profile-list">My Posts ({posts.length})</li>

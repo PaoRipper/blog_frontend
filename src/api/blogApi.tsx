@@ -1,5 +1,5 @@
 import { baseURL } from "@/constants/constants";
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
 export const getAllPosts = async () => {
   const data = await axios.get(`${baseURL}/posts`).then((res) => res.data);
@@ -60,3 +60,8 @@ export const deletePostById = async (id: number) => {
   const data = await axios.delete(`${baseURL}/post/${id}`).then((res) => res.data);
   return data;
 };
+
+export const follow = async (userId: number, postId: number) => {
+  const data = await axios.post(`${baseURL}/users/${userId}/follow/${postId}`)
+  return data;
+}

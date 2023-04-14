@@ -19,6 +19,7 @@
 }
 
 .hoverable {
+  z-index: 0;
   margin: 7% auto;
 }
 
@@ -31,6 +32,22 @@
   background-color: #ff368d;
   color: #fff;
   border: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.ellipsis-icon {
+  right: 20px;
+  width: 30px;
+  height: 28px;
+}
+
+.btn-ellipsis {
+  border: none;
+  background: none;
+  color: #ffffff;
 }
 
 .card-by-id {
@@ -66,8 +83,26 @@
   border: none;
 }
 
+.card.hoverable .card-body {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
 .card-text {
   font-size: 1rem;
+  margin: 0;
+}
+
+.btn-follow {
+  color: #ffffff;
+  background-color: rgb(50, 50, 50);
+}
+
+.btn-follow:hover {
+  color: #ffffff;
+  background-color: rgb(94, 86, 86);
 }
 
 .card-footer {

@@ -1,5 +1,11 @@
 import React from "react";
 
+
+enum EDropdown {
+  dropdown = "dropdown",
+  dropup = "dropup"
+}
+
 const Dropdown = (props: {
   dropdownItems: string[];
   currentValue: string;
