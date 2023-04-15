@@ -49,19 +49,27 @@ export const getPostById = async (id: number) => {
 };
 
 export const getPostByUserId = async (id: number, ...params: any) => {
-  const sortBy = params[0]?.sortBy;
-  const data = await axios
-    .get(`${baseURL}/users/${id}/posts?sortBy=${sortBy}`)
-    .then((res) => res.data);
+  const sortBy = params[0]?.sortBy || "DESC";
+  const data = await axios.get(`${baseURL}/users/${id}/posts?sortBy=${sortBy}`);
   return data;
 };
 
 export const deletePostById = async (id: number) => {
-  const data = await axios.delete(`${baseURL}/post/${id}`).then((res) => res.data);
+  const data = await axios
+    .delete(`${baseURL}/post/${id}`)
+    .then((res) => res.data);
   return data;
 };
 
 export const follow = async (userId: number, postId: number) => {
-  const data = await axios.post(`${baseURL}/users/${userId}/follow/${postId}`)
+  const data = await axios.post(`${baseURL}/users/${userId}/follow/${postId}`);
   return data;
-}
+};
+
+export const getPostUserFollow = async (userId: number, ...params: any) => {
+  const sortBy = params[0]?.sortBy || "DESC";
+  const data = await axios.get(
+    `${baseURL}/users/${userId}/follow?sortBy=${sortBy}`
+  );
+  return data;
+};

@@ -5,7 +5,10 @@ import React from "react";
 
 const PostList = (props: {
   posts: TPostList[];
-  handleDeletePost: (id: number) => void;
+  handleFnc?: {
+    fnc: (...params: any) => any,
+    text: string
+  }
 }) => {
   const processCommentsCount = (comment_count: number) => {
     if (comment_count > 0) {
@@ -38,9 +41,13 @@ const PostList = (props: {
             <div className="col-lg-3">
               <button
                 className="btn btn-lg post-list-btn"
-                onClick={() => props.handleDeletePost(post.postID)}
+                onClick={() =>
+                  props.handleFnc
+                    ? props.handleFnc.fnc(post.postID)
+                    : null
+                }
               >
-                <div className="circle"></div>Delete
+                <div className="circle"></div>{props.handleFnc?.text}
               </button>
             </div>
           </div>

@@ -31,7 +31,7 @@ const PostCard = (props: {
   const [comment, setComment] = useState<ReactNode>();
   const [clickable, setClickable] = useState(true);
   const [hideComment, setHideComment] = useState(false);
-  const { user } = useContext(LoginContext);
+  const { user, isLogin } = useContext(LoginContext);
   const alert = useAlert();
   const router = useRouter();
 
@@ -75,13 +75,15 @@ const PostCard = (props: {
     e.preventDefault();
     const userId = user.userID;
     if (userId) {
-      follow(userId, props.id).then((res) => {
-        if (res.status === 201) {
-          alert.success("Follow!");
-        } else {
-          alert.error("Something went wrong!");
-        }
-      });
+      follow(userId, props.id)
+        .then((res) => {
+          if (res.status === 201) {
+            alert.success("Follow!");
+          }
+        })
+        .catch((e) => {
+          alert.error("Something went wrong")
+        });
     }
   };
 
@@ -89,16 +91,18 @@ const PostCard = (props: {
     <Link className={`card hoverable`} href={`post/${props.id}`}>
       <div className={`card-header`}>
         <ProfileLayout username={props.username} />
-        <CustomDropdown
-          dropdownItems={["Follow post"]}
-          onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-            handleFollow(e);
-          }}
-          type="DROPUP"
-          icon={{ icon: faEllipsis, className: "ellipsis-icon", size: "xl" }}
-          arrow={false}
-          btnClassName="btn-ellipsis"
-        />
+        {isLogin && (
+          <CustomDropdown
+            dropdownItems={["Follow post"]}
+            onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+              handleFollow(e);
+            }}
+            type="DROPSTART"
+            icon={{ icon: faEllipsis, className: "ellipsis-icon", size: "xl" }}
+            arrow={false}
+            btnClassName="btn-ellipsis"
+          />
+        )}
       </div>
       <div className={`card-body `}>
         <p className={`card-text`}>{props.body}</p>

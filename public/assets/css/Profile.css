@@ -30,11 +30,17 @@
 
 .profile-list {
   font-size: 1.2rem;
-  font-weight: bold;
-  border-bottom: 3px solid #9b8be1;
   width: fit-content;
   display: inline-block;
   margin: auto 20px auto;
+  cursor: pointer;
+}
+
+.tab.active {
+  border-bottom: solid #830176;
+  border-width: 3px;
+  font-weight: bold;
+  
 }
 
 .post-list {
