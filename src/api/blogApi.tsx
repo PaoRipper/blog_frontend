@@ -73,3 +73,10 @@ export const getPostUserFollow = async (userId: number, ...params: any) => {
   );
   return data;
 };
+
+export const unfollow = async (userId: number, postId: number) => {
+  const data = await axios.delete(
+    `${baseURL}/users/${userId}/follow/${postId}`
+  );
+  return data;
+};

@@ -1,5 +1,5 @@
 import { deletePostById } from "@/api/blogApi";
-import { TPostList } from "@/pages/user/[userId]";
+import { EButton, TPostList } from "@/pages/user/[userId]";
 import { shortText } from "@/utils/formatUtils";
 import React from "react";
 
@@ -8,6 +8,7 @@ const PostList = (props: {
   handleFnc?: {
     fnc: (...params: any) => any,
     text: string
+    btn: EButton
   }
 }) => {
   const processCommentsCount = (comment_count: number) => {
@@ -27,27 +28,27 @@ const PostList = (props: {
       {props.posts.map((post) => (
         <div className="post-list" key={post.postID}>
           <div className="row">
-            <div className="col-lg-3 comments-tab">
+            <div className="col-lg-3 post-list-col">
               <h6 className="post-list-comment text-center">
                 {processCommentsCount(post.comments_count)}
               </h6>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-3 post-list-col">
               <h6 className="post-list-body">{shortText(post.postText)}</h6>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-3 post-list-col">
               <h4 className="post-list-badge">Immortal!</h4>
             </div>
-            <div className="col-lg-3">
+            <div className="col-lg-3 post-list-col">
               <button
-                className="btn btn-lg post-list-btn"
+                className={`btn btn-md ${props.handleFnc?.btn} rounded`}
                 onClick={() =>
                   props.handleFnc
                     ? props.handleFnc.fnc(post.postID)
                     : null
                 }
               >
-                <div className="circle"></div>{props.handleFnc?.text}
+                <span className="text-center">{props.handleFnc?.text}</span>
               </button>
             </div>
           </div>

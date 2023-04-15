@@ -2,6 +2,7 @@ import {
   deletePostById,
   getPostByUserId,
   getPostUserFollow,
+  unfollow,
 } from "@/api/blogApi";
 import CustomDropdown from "@/components/CustomDropdown";
 import PostList from "@/components/Layout/PostList";
@@ -25,9 +26,18 @@ export type TTabs = {
   onClick: {
     fnc: (...params: any) => any;
     text: string;
+    btn: EButton;
   };
   data: TPostList[];
 };
+
+export enum EButton {
+  PRIMARY = "btn-outline-primary",
+  SUCCESS = "btn-outline-success",
+  DANGER = "btn-outline-danger",
+  WARNING = "btn-outline-warning",
+  INFO = "btn-outline-info",
+}
 
 const Profile = (props: { data: TPostList[] }) => {
   const { isLogin } = useContext(LoginContext);
@@ -44,14 +54,23 @@ const Profile = (props: { data: TPostList[] }) => {
     const data = await deletePostById(postId);
     if (data.message == "success") {
       fetchPosts();
-      alert.success("Delete success!");
+      alert.success("Deleted!");
     } else {
       alert.success("Delete error!");
     }
   };
 
   const handleRemoveFollow = async (postId: number) => {
-    
+    await unfollow(userId, postId)
+      .then((res) => {
+        if (res.status === 200) {
+          fetchPosts();
+          alert.success("Unfollowed!");
+        }
+      })
+      .catch((e) => {
+        alert.error("Unfollow error");
+      });
   };
 
   const tabs: TTabs[] = [
@@ -60,7 +79,8 @@ const Profile = (props: { data: TPostList[] }) => {
       text: "My Posts",
       onClick: {
         fnc: handleDeletePost,
-        text: "Delete",
+        text: "Delete post",
+        btn: EButton.DANGER,
       },
       data: posts,
     },
@@ -70,6 +90,7 @@ const Profile = (props: { data: TPostList[] }) => {
       onClick: {
         fnc: handleRemoveFollow,
         text: "Unfollow",
+        btn: EButton.INFO,
       },
       data: followedPost,
     },

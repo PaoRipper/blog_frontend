@@ -72,6 +72,12 @@
   font-style: italic;
 }
 
+.post-list-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .circle {
   width: 14px;
   height: 14px;
@@ -84,22 +90,17 @@
 }
 
 .post-list-btn {
-  border-bottom-left-radius: 30px;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
+  border-radius: 50px;
   border: 3px solid #e3e7eb;
   background-color: transparent;
   color: #000;
   font-size: 1.1rem;
   font-weight: bold;
-  padding-right: 4rem;
+  padding: 4% 15%;
 }
 
 .post-list-btn:hover {
   cursor: pointer;
-  border-bottom-left-radius: 30px;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
   border: 3px solid #e3e7eb;
   background-color: #e3e7eb;
 }
