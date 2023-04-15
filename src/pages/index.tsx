@@ -1,4 +1,3 @@
-import PostCard from "@/components/PostCard";
 import { useContext, useEffect, useState } from "react";
 import { getAllPosts, googleLogin } from "@/api/blogApi";
 import { values } from "lodash";
@@ -7,6 +6,7 @@ import { useCookies } from "react-cookie";
 import { GetServerSidePropsContext } from "next";
 import Snowfall from "react-snowfall";
 import SnowTools from "@/components/SnowTools";
+import HoverPostCard from "@/components/HoverPostCard";
 
 export type TPosts = {
   commentID: number;
@@ -114,7 +114,7 @@ export default function Home(props: { data: TPosts[] }) {
           <div className="row">
             {postsSorted.topPosts.map((post, index) => (
               <div key={index} className="col-lg-4">
-                <PostCard
+                <HoverPostCard
                   id={post.postID}
                   username={post.username}
                   body={post.body}
@@ -131,7 +131,7 @@ export default function Home(props: { data: TPosts[] }) {
           <div className="row">
             {postsSorted.otherPosts.map((post, index) => (
               <div key={index} className="col-lg-3">
-                <PostCard
+                <HoverPostCard
                   id={post.postID}
                   username={post.username}
                   body={post.body}

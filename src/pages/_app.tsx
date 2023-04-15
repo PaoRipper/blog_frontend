@@ -11,6 +11,9 @@ import "/public/assets/css/Signup.css";
 import "/public/assets/css/Profile.css";
 import "/public/assets/css/Create.css";
 import "/public/assets/css/Snow.css";
+import "/public/assets/css/Comment.css";
+
+
 
 import { LoginContextProvider } from "@/context/LoginContext";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";

@@ -19,7 +19,6 @@
 }
 
 .hoverable {
-  z-index: 0;
   margin: 7% auto;
 }
 
@@ -37,6 +36,20 @@
   align-items: center;
 }
 
+.card-body {
+  background-color: rgba(244, 244, 244, 0.3);
+  color: #000;
+  border: none;
+}
+
+.card-text {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.card-text-id {
+  margin: 1rem;
+}
 
 .ellipsis-icon {
   right: 20px;
@@ -64,35 +77,10 @@
   align-items: center;
 }
 
-.body-card-by-id {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: red;
-}
-
 .card-title {
   font-size: 1.5rem;
   font-weight: 900;
   padding-top: 15px;
-}
-
-.card-body {
-  background-color: rgba(244, 244, 244, 0.3);
-  color: #000;
-  border: none;
-}
-
-.card.hoverable .card-body {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
-.card-text {
-  font-size: 1rem;
-  margin: 0;
 }
 
 .btn-follow {

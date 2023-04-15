@@ -44,7 +44,7 @@ export const googleLogin = async () => {
 };
 
 export const getPostById = async (id: number) => {
-  const data = await axios.get(`${baseURL}/post/${id}`).then((res) => res.data);
+  const data = await axios.get(`${baseURL}/post/${id}`)
   return data;
 };
 
@@ -80,3 +80,15 @@ export const unfollow = async (userId: number, postId: number) => {
   );
   return data;
 };
+
+export const getCommentsByPostId = async (postId: number) => {
+  const data = await axios.get(`${baseURL}/comments/${postId}`)
+  return data;
+}
+
+export const addNewComment = async (userID: number, postID: number, content: string) => {
+  const data = await axios.post(`${baseURL}/comment`, {userID, postID, content});
+  return data;
+}
+
+
