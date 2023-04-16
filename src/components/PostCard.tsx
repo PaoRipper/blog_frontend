@@ -3,7 +3,6 @@ import React from "react";
 import ProfileLayout from "./Layout/ProfileLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
-import Link from "next/link";
 
 const PostCard = (props: {
   className?: string;
