@@ -23,8 +23,8 @@ export type TPosts = {
 };
 
 type TPostsSorted = {
-  topPosts: TPosts[];
-  otherPosts: TPosts[];
+  top: TPosts[];
+  others: TPosts[];
 };
 
 export type TSnow = {
@@ -38,8 +38,8 @@ export default function Home(props: { data: TPosts[] }) {
   const [posts, setPosts] = useState<TPosts[]>([]);
   const [cookies] = useCookies();
   const [postsSorted, setPostsSorted] = useState<TPostsSorted>({
-    topPosts: [],
-    otherPosts: [],
+    top: [],
+    others: [],
   });
   const [snow, setSnow] = useState<TSnow>({
     color: "#FF4378",
@@ -50,19 +50,19 @@ export default function Home(props: { data: TPosts[] }) {
   useEffect(() => {
     setPosts(
       values(
-        props.data.reduce((acc: any, obj: TPosts) => {
+        props.data.reduce((res: any, obj: TPosts) => {
           const { postID, postText, commentText, username } = obj;
-          if (acc[postID]) {
-            acc[postID].comments.push(commentText);
+          if (res[postID]) {
+            res[postID].comments.push(commentText);
           } else {
-            acc[postID] = {
+            res[postID] = {
               postID,
               username,
               body: postText,
               comments: [commentText],
             };
           }
-          return acc;
+          return res;
         }, {})
       )
     );
@@ -71,16 +71,28 @@ export default function Home(props: { data: TPosts[] }) {
 
   useEffect(() => {
     const result: TPostsSorted = posts.reduce(
-      (acc: any, post: TPosts) => {
-        if (post.comments.length >= 1 && acc.topPosts.length < 3) {
-          acc.topPosts.push(post);
+      (res: any, post: TPosts) => {
+        const checkCommentLength = res.top.some(
+          (p: TPosts) => post.comments.length >= p.comments.length
+        );
+        if (
+          post.comments.length > 0 &&
+          (res.top.length < 3 || checkCommentLength)
+        ) {
+          res.top.push(post);
+          res.top.sort(
+            (a: TPosts, b: TPosts) => b.comments.length - a.comments.length
+          );
+          res.top = res.top.slice(0, 3);
         } else {
-          acc.otherPosts.push(post);
+          res.others.push(post);
         }
-        return acc;
+
+        return res;
       },
-      { topPosts: [], otherPosts: [] }
+      { top: [], others: [] }
     );
+
     setPostsSorted(result);
   }, [posts]);
 
@@ -112,7 +124,7 @@ export default function Home(props: { data: TPosts[] }) {
             <SnowTools snow={snow} setSnow={setSnow} />
           </div>
           <div className="row">
-            {postsSorted.topPosts.map((post, index) => (
+            {postsSorted.top.map((post, index) => (
               <div key={index} className="col-lg-4">
                 <HoverPostCard
                   id={post.postID}
@@ -129,7 +141,7 @@ export default function Home(props: { data: TPosts[] }) {
         <section id="card-section">
           <h1 className="fw-bold">OTHERS BON</h1>
           <div className="row">
-            {postsSorted.otherPosts.map((post, index) => (
+            {postsSorted.others.map((post, index) => (
               <div key={index} className="col-lg-3">
                 <HoverPostCard
                   id={post.postID}
@@ -149,7 +161,7 @@ export default function Home(props: { data: TPosts[] }) {
 export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
-  const data = await getAllPosts().then((res) => res);
+  const { data } = await getAllPosts();
   return {
     props: {
       data,
