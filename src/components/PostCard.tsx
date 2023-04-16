@@ -2,7 +2,8 @@
 import React from "react";
 import ProfileLayout from "./Layout/ProfileLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faComment, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
+import { faPaperPlane, faThumbsUp } from "@fortawesome/free-regular-svg-icons";
+import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 const PostCard = (props: {
   className?: string;
@@ -32,7 +33,7 @@ const PostCard = (props: {
       <div className="card-footer">
         <div className="row">
           <div className="col-lg-6 card-footer-item">
-            <FontAwesomeIcon icon={faThumbsUp} size="lg" />
+            <FontAwesomeIcon icon={faThumbsUp as IconProp} size="lg" />
             <span
               className="fs-5 card-footer-text"
               onClick={props.onClick?.like && props.onClick.like}
@@ -41,7 +42,7 @@ const PostCard = (props: {
             </span>
           </div>
           <div className="col-lg-6 card-footer-item">
-            <FontAwesomeIcon icon={faComment} size="lg" />
+            <FontAwesomeIcon icon={faPaperPlane as IconProp} size="lg" />
             <span
               className="fs-5 card-footer-text"
               onClick={props.onClick?.comment && props.onClick.comment}
