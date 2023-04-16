@@ -42,6 +42,22 @@
   border: none;
 }
 
+.card-footer-item {
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.card-footer-text {
+  margin: auto 7px;
+  text-decoration: none;
+  color: #000000;
+}
+
+.card-footer-item:hover {
+  background: rgb(233, 233, 233);
+}
+
 .card-text {
   font-size: 1rem;
   margin: 0;
@@ -65,8 +81,7 @@
 
 .card-by-id {
   width: 50%;
-  height: 15rem;
-  margin: 0 auto;
+  margin: 2rem auto;
   text-align: center;
 }
 

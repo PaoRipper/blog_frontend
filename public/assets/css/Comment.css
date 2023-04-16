@@ -1,6 +1,7 @@
+
 .comment-item {
-  border: 1px solid rgb(41, 41, 41);
-  border-radius: 5px;
+  border: 1px solid rgb(208, 208, 208);
+  border-radius: 15px;
   padding: 2% 4%;
   margin: 3% auto;
   box-shadow: 1px 15px 24px -8px rgba(0, 0, 0, 0.1);
@@ -13,32 +14,66 @@
 }
 
 .individual-post {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .link-reply-btn {
-    text-decoration: none;
-    color: #ffffff;
+  text-decoration: none;
+  color: #ffffff;
 }
 
 .reply-btn {
-    margin: 3% auto;
-    background: #232525;
-    color: #ffffff;
+  margin: 3% auto;
+  background: #232525;
+  color: #ffffff;
 }
 
 .reply-btn:hover {
-    margin: 3% auto;
-    background: #232525;
-    color: #ffffff;
-    opacity: 0.7;
+  margin: 3% auto;
+  background: #232525;
+  color: #ffffff;
+  opacity: 0.7;
 }
 
 .time-ago {
-  margin: auto 1rem;
+  margin: 0 auto;
   opacity: 0.5;
-  float: right;
+  display: flex;
+  justify-content: flex-end;
+}
+
+#comment-textarea {
+  border-radius: 15px;
+  background: #f0f2f5;
+  padding: 20px;
+  resize: none;
+  box-sizing: border-box;
+  z-index: 0;
+}
+
+.submit-comment-icon {
+  position: absolute;
+  top: 95px;
+  right: 20px;
+  background-color: transparent;
+  padding: 5px;
+  z-index: 1;
+}
+
+.submit-comment-icon:hover {
+  cursor: pointer;
+  transition: ease-in;
+  transform: scale(1.3);
+}
+
+.hasComment {
+  color: #0571ed;
+}
+
+.noComment {
+  pointer-events: none;
+  color: #bec3c9;
 }

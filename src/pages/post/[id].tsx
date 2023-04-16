@@ -3,11 +3,13 @@ import React, { useContext, useMemo, useState } from "react";
 import { TPosts } from "..";
 import { GetServerSidePropsContext, NextPage } from "next";
 import PostCard from "@/components/PostCard";
-import Comment from "@/components/Layout/Comment";
-import Link from "next/link";
+import CommentList from "@/components/Layout/Comment";
 import { useRouter } from "next/router";
 import { LoginContext } from "@/context/LoginContext";
 import { useAlert } from "react-alert";
+import ProfileLayout from "@/components/Layout/ProfileLayout";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
 type TPost = {
   comments: [{ userId: number; comment: string }];
@@ -30,7 +32,7 @@ const PostID = (props: { posts: TPosts[]; comments: TComments[] }) => {
   const [comments, setComments] = useState<TComments[]>(props.comments);
   const [replyText, setReplyText] = useState<string>("");
   const [reply, setReply] = useState<boolean>(false);
-  const { user } = useContext(LoginContext);
+  const { user, isLogin } = useContext(LoginContext);
   const router = useRouter();
   const postId = Number(router.query.id);
   const alert = useAlert();
@@ -77,9 +79,23 @@ const PostID = (props: { posts: TPosts[]; comments: TComments[] }) => {
           alert.error("Something went wrong");
         })
         .finally(() => {
-          setReply(false);
+          setReplyText("")
         });
     }
+  };
+
+  const handleComment = () => {
+    if (!isLogin) {
+      alert.info("Please login to comment")
+    } else {
+      setReply(true)
+      const commentSection = document.getElementById("comment-here");
+      commentSection?.scrollIntoView({behavior: "smooth"})
+    }
+  }
+
+  const handleLike = () => {
+    console.log("liked");
   };
 
   return (
@@ -91,33 +107,31 @@ const PostID = (props: { posts: TPosts[]; comments: TComments[] }) => {
             username={post.username}
             body={post.body}
             comments={[post.comments[0].comment]}
+            onClick={{ like: handleLike, comment: handleComment }}
           />
-          <button
-            className="btn btn-lg reply-btn"
-            onClick={() => setReply(true)}
-          >
-            <Link href="#comment-here" className="link-reply-btn">
-              Reply
-            </Link>
-          </button>
         </div>
       ))}
       <ul>
-        <Comment comments={comments} />
+        <CommentList comments={comments} />
         <section id="comment-here">
-          {reply ? (
+          {reply && isLogin ? (
             <div className="input-group">
+              <ProfileLayout/>
               <textarea
-                className="form-control"
+                id="comment-textarea"
+                className="form-control "
                 aria-label="With textarea"
+                placeholder="Write your comment"
+                value={replyText}
+                rows={4}
                 onChange={(e) => setReplyText(e.target.value)}
               ></textarea>
-              <button
-                className="btn btn-md btn-info text-light"
+              <FontAwesomeIcon
+                icon={faPaperPlane}
+                size="lg"
+                className={`submit-comment-icon ${replyText ? 'hasComment' : "noComment"}`}
                 onClick={handleAddComment}
-              >
-                Reply
-              </button>
+              />
             </div>
           ) : null}
         </section>
