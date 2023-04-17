@@ -79,20 +79,20 @@ const PostID = (props: { posts: TPosts[]; comments: TComments[] }) => {
           alert.error("Something went wrong");
         })
         .finally(() => {
-          setReplyText("")
+          setReplyText("");
         });
     }
   };
 
   const handleComment = () => {
     if (!isLogin) {
-      alert.info("Please login to comment")
+      alert.info("Please login to comment");
     } else {
-      setReply(true)
+      setReply(true);
       const commentSection = document.getElementById("comment-here");
-      commentSection?.scrollIntoView({behavior: "smooth"})
+      commentSection?.scrollIntoView({ behavior: "smooth" });
     }
-  }
+  };
 
   const handleLike = () => {
     console.log("liked");
@@ -111,12 +111,15 @@ const PostID = (props: { posts: TPosts[]; comments: TComments[] }) => {
           />
         </div>
       ))}
+      <h2>
+        {comments.length} {comments.length > 1 ? "comments" : "comment"}
+      </h2>
       <ul>
         <CommentList comments={comments} />
         <section id="comment-here">
           {reply && isLogin ? (
             <div className="input-group">
-              <ProfileLayout/>
+              <ProfileLayout />
               <textarea
                 id="comment-textarea"
                 className="form-control "
@@ -129,7 +132,9 @@ const PostID = (props: { posts: TPosts[]; comments: TComments[] }) => {
               <FontAwesomeIcon
                 icon={faPaperPlane}
                 size="lg"
-                className={`submit-comment-icon ${replyText ? 'hasComment' : "noComment"}`}
+                className={`submit-comment-icon ${
+                  replyText ? "hasComment" : "noComment"
+                }`}
                 onClick={handleAddComment}
               />
             </div>

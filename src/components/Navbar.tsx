@@ -10,10 +10,6 @@ const Header = () => {
   const isLogin = useMemo(() => user.auth, [user]);
 
   const Menus = [
-    // {
-    //   title: "Profile",
-    //   url: "/profile",
-    // },
     {
       key: "sign",
       title: "Sign up",
@@ -65,7 +61,7 @@ const Header = () => {
         <div className="collapse navbar-collapse" id="navbarContent">
           <ul className="navbar-nav ms-auto">
             {isLogin ? (
-              <Link className="profile-image" href={`user/${user.userID}`}>
+              <Link className="profile-image" href={`/user/${user.userID}`}>
                 <Image
                   src={BrandLogo}
                   alt="navbar-brand"
