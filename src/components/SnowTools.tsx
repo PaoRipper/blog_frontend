@@ -16,7 +16,7 @@ const SnowTools = (props: {
 
   return (
     <div className="d-flex justify-content-center align-items-center">
-      <span>Color:</span>
+      <span>Snow color:</span>
       <input
         type="color"
         onChange={(e) => handleColorChange(e)}
