@@ -65,7 +65,9 @@ export const LoginContextProvider = (props: { children: any }) => {
         alert.success("Logged in!");
       })
       .catch((e) => {
-        if (e.response.data.message === "Record not found") {
+        if (e.response.status === 401) {
+          alert.error(e.response.data.message);
+        } else if (e.response.status === 503) {
           alert.error(
             "No email and/or password!, please check your information"
           );
@@ -107,7 +109,7 @@ export const LoginContextProvider = (props: { children: any }) => {
         }
       }
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
