@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import { getAllPosts, googleLogin } from "@/api/blogApi";
+import { getAllPosts } from "@/api/blogApi";
 import { values } from "lodash";
 import { LoginContext } from "@/context/LoginContext";
-import { useCookies } from "react-cookie";
 import { GetServerSidePropsContext } from "next";
 import Snowfall from "react-snowfall";
 import SnowTools from "@/components/SnowTools";
@@ -34,9 +33,25 @@ export type TSnow = {
 };
 
 export default function Home(props: { data: TPosts[] }) {
-  const { setUser } = useContext(LoginContext);
-  const [posts, setPosts] = useState<TPosts[]>([]);
-  const [cookies] = useCookies();
+  const { user } = useContext(LoginContext);
+  const [posts, setPosts] = useState<TPosts[]>(() => {
+    return values(
+      props.data.reduce((res: any, obj: TPosts) => {
+        const { postID, postText, commentText, username } = obj;
+        if (res[postID]) {
+          res[postID].comments.push(commentText);
+        } else {
+          res[postID] = {
+            postID,
+            username,
+            body: postText,
+            comments: [commentText],
+          };
+        }
+        return res;
+      }, {})
+    );
+  });
   const [postsSorted, setPostsSorted] = useState<TPostsSorted>({
     top: [],
     others: [],
@@ -46,28 +61,6 @@ export default function Home(props: { data: TPosts[] }) {
     snowflakeCount: 80,
     wind: [3, 5],
   });
-
-  useEffect(() => {
-    setPosts(
-      values(
-        props.data.reduce((res: any, obj: TPosts) => {
-          const { postID, postText, commentText, username } = obj;
-          if (res[postID]) {
-            res[postID].comments.push(commentText);
-          } else {
-            res[postID] = {
-              postID,
-              username,
-              body: postText,
-              comments: [commentText],
-            };
-          }
-          return res;
-        }, {})
-      )
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   useEffect(() => {
     const result: TPostsSorted = posts.reduce(
@@ -92,22 +85,8 @@ export default function Home(props: { data: TPosts[] }) {
       },
       { top: [], others: [] }
     );
-
     setPostsSorted(result);
   }, [posts]);
-
-  useEffect(() => {
-    const sessionId = cookies["connect.sid"];
-    if (sessionId) {
-      googleLogin().then((res) => {
-        const { userID, username } = res.data.user;
-        const { auth, connect_sid } = res.data;
-        setUser({ auth, token: connect_sid, userID, username });
-        window && window.localStorage.setItem("isLogin", "true");
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
@@ -158,9 +137,7 @@ export default function Home(props: { data: TPosts[] }) {
   );
 }
 
-export const getServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
+export const getServerSideProps = async () => {
   const { data } = await getAllPosts();
   return {
     props: {
