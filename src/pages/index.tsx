@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { getAllPosts } from "@/api/blogApi";
-import { values } from "lodash";
+import { orderBy, values } from "lodash";
 import { LoginContext } from "@/context/LoginContext";
 import { GetServerSidePropsContext } from "next";
 import Snowfall from "react-snowfall";
@@ -70,9 +70,7 @@ export default function Home(props: { data: TPosts[] }) {
         );
         if (res.top.length < 3 || checkCommentLength) {
           res.top.push(post);
-          res.top.sort(
-            (a: TPosts, b: TPosts) => b.comments.length - a.comments.length
-          );
+          res.top = orderBy(res.top, [(post) => post.comments.length], "desc");
           const remaining = res.top.slice(3);
           res.top = res.top.slice(0, 3);
           res.others.push(...remaining);
