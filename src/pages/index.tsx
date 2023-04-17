@@ -66,21 +66,19 @@ export default function Home(props: { data: TPosts[] }) {
     const result: TPostsSorted = posts.reduce(
       (res: any, post: TPosts) => {
         const checkCommentLength = res.top.some(
-          (p: TPosts) => post.comments.length >= p.comments.length
+          (p: TPosts) => post.comments.length > p.comments.length
         );
-        if (
-          post.comments.length > 0 &&
-          (res.top.length < 3 || checkCommentLength)
-        ) {
+        if (res.top.length < 3 || checkCommentLength) {
           res.top.push(post);
           res.top.sort(
             (a: TPosts, b: TPosts) => b.comments.length - a.comments.length
           );
+          const remaining = res.top.slice(3);
           res.top = res.top.slice(0, 3);
+          res.others.push(...remaining);
         } else {
           res.others.push(post);
         }
-
         return res;
       },
       { top: [], others: [] }
