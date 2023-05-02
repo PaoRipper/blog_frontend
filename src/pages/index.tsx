@@ -70,7 +70,7 @@ export default function Home(props: { data: TPosts[] }) {
         );
         if (res.top.length < 3 || checkCommentLength) {
           res.top.push(post);
-          res.top = orderBy(res.top, [(post) => post.comments.length], "desc");
+          res.top = orderBy(res.top, [(post: TPosts) => post.comments.length], "desc");
           const remaining = res.top.slice(3);
           res.top = res.top.slice(0, 3);
           res.others.push(...remaining);
